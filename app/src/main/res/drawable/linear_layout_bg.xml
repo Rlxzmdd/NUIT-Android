@@ -1,0 +1,17 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+<!--    <solid android:color="#ffffff"/>-->
+<!--&lt;!&ndash;    <stroke android:width="1dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:color="#000000"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:dashWidth="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:dashGap="0dp"/>&ndash;&gt;-->
+    <padding android:top="1dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:bottom="0dp"/>
+    <corners android:topLeftRadius="32dp"
+            android:topRightRadius="32dp"/>
+    <gradient android:startColor="#F3F3F3"
+        android:endColor="#E6E6E6"
+        android:angle="270"/>
+</shape>

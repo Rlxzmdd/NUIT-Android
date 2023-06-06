@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/card">
+        <ImageView
+            android:id="@+id/item_img"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            />
+        <TextView
+            android:id="@+id/item_id"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+        <TextView
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:id="@+id/item_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_toRightOf="@id/item_img"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_msg"
+            android:layout_below="@id/item_tv"
+            android:layout_toRightOf="@id/item_img"
+            android:paddingLeft="10dp"
+            android:textSize="13sp"
+            android:textColor="#a6a6a6"
+            android:layout_marginTop="2dp"/>
+    </RelativeLayout>
+    <View
+        android:layout_below="@id/card"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E3E3E3" />
+</RelativeLayout>

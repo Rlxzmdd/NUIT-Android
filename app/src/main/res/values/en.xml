@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wehchat_register">WeChat Register\n</string>
+    <string name="name">Name</string>
+    <string name="name_example">ps: zhouzihan\n</string>
+    <string name="pass">Pass</string>
+    <string name="pass_title">input pass</string>
+    <string name="re_pass">reinput pass</string>
+    <string name="re_pass_title">re input</string>
+    <string name="nation">Nation</string>
+    <string name="gender">Gender</string>
+    <string name="brith">Brith</string>
+    <string name="brith_title">input birthday\n</string>
+    <string name="need_read">I have read something.</string>
+    <string name="register">Register\n</string>
+</resources>

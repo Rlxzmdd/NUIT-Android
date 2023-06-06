@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F3F3">
+    <!-- 添加一个AppBarLayout -->
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/app_bar_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        &lt;!&ndash; 添加一个MaterialToolbar &ndash;&gt;-->
+<!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:background="@color/navigation_bar_color"-->
+<!--            tools:ignore="MissingConstraints">-->
+
+<!--            &lt;!&ndash; 添加一个TextView &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/toolbar_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="当前对象的名称"-->
+<!--                android:textColor="@color/black" />-->
+
+<!--        </com.google.android.material.appbar.MaterialToolbar>-->
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+    <RelativeLayout
+        android:id="@+id/app_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ededed"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+    <!--header-->
+    <TextView
+        android:id="@+id/chat_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="微信(10)"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+    <ImageButton
+        android:id="@+id/chat_return"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/chat_return" />
+    <!--搜素框-->
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/app_top_bar"
+        app:layout_constraintBottom_toBottomOf="@id/viewDivider"
+        />
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutMessageInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutMessageInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clipChildren="false"
+        android:background="@drawable/linear_layout_bg"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/editTextMessageInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:stateListAnimator="@animator/lift_on_touch"
+            android:background="@drawable/edit_text_bg"
+            android:hint="点击输入信息..."
+            android:inputType="textMultiLine|textCapSentences|textAutoCorrect|textAutoComplete"
+            android:maxLines="4"
+            android:padding="10dp"
+            android:layout_margin="8dp"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/buttonSendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:layout_margin="8dp"
+            android:text="发送"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
