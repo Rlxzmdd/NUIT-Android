@@ -1,89 +1,73 @@
 package com.example.imitatewechat.model;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class User implements Parcelable {
-    // 其他属性和方法
+import java.util.HashMap;
 
-    private String name; // 好友的名字
-    private int pic; // 好友的头像
-    private int id;
-    private String msg; // 好友的最近一条消息
-    private Drawable drawable;
-    private boolean flag = false;
-    public User(int id, String name, int pic, String msg) {
-        this.id = id;
+public class User{
+    private int uid; // 用户的id
+    private String name; // 用户的名字
+    private String password; // 用户的密码
+    private String phone; // 用户的手机号
+    private int age; // 用户的年龄
+    private String pic; // 用户的头像
+    private HashMap<Integer, Friend> friends; // 用户的好友信息，键为好友的uid，值为Friend对象
+    private HashMap<Integer, Group> groups; // 用户的群组信息，键为群组的gid，值为Group对象
+    private HashMap<Integer, Message> messages; // 用户的聊天记录，键为消息的mid，值为Message对象
+
+    public User(int uid, String name, String password, String phone, int age, String pic) {
+        this.uid = uid;
         this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.age = age;
         this.pic = pic;
-        this.msg = msg;
-    }
-    public User(int id, String name, int pic) {
-        this.id = id;
-        this.name = name;
-        this.pic = pic;
-    }
-    public User(int id, String name, Drawable pic) {
-        this.id = id;
-        this.name = name;
-        this.drawable = pic;
-        flag = true;
+        this.friends = new HashMap<>();
+        this.groups = new HashMap<>();
+        this.messages = new HashMap<>();
     }
 
-    public User(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public int getUid() {
+        return uid;
     }
 
     public String getName() {
         return name;
     }
 
-    public Drawable getPic(Context context) {
-        if(flag){
-            return drawable;
-        }else{
-            return context.getDrawable(this.pic);
-            // todo 修复聊天对象图片显示
-        }
+    public String getPassword() {
+        return password;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getPhone() {
+        return phone;
     }
 
-    public int getId() {
-        return id;
+    public int getAge() {
+        return age;
     }
 
-
-    // 实现Parcelable接口的方法
-    @Override
-    public int describeContents() {
-        return 0;
+    public HashMap<Integer, Friend> getFriends() {
+        return friends;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        // 把对象的属性写入Parcel中
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeInt(pic);
-        dest.writeString(msg);
+    public HashMap<Integer, Group> getGroups() {
+        return groups;
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            // 从Parcel中读取对象的属性，返回一个Friend对象
-            return new User(in.readInt(), in.readString(), in.readInt(), in.readString());
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
+    public HashMap<Integer, Message> getMessages() {
+        return messages;
+    }
 }

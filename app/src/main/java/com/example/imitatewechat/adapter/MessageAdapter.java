@@ -11,13 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.model.User;
 import com.example.imitatewechat.model.Message;
+import com.example.imitatewechat.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-// 一个类来表示一个适配器，用于在RecyclerView中显示聊天消息
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private ArrayList<Message> mMessages; // 消息列表
@@ -66,7 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             LeftHolder leftHolder = (LeftHolder) holder; // 强制类型转换
             leftHolder.contentTv.setText(message.getContent());
             leftHolder.timeTv.setText(time);
-            // leftHolder.picImv.setImageDrawable(sender.getPic(this.mContext)); todo 修复头像
+            leftHolder.picImv.setImageDrawable(sender.getPic(this.mContext));
             leftHolder.nameTv.setText(sender.getName());
         } else { // 如果是右边视图持有者
             RightHolder rightHolder = (RightHolder) holder; // 强制类型转换

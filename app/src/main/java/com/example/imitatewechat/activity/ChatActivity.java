@@ -1,4 +1,5 @@
 package com.example.imitatewechat.activity;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,108 +8,66 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.adapter.MessageAdapter;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.db.MySQLDao;
 import com.example.imitatewechat.model.Message;
+import com.example.imitatewechat.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerViewMessages;
-    private EditText editTextMessageInput;
-    private Button buttonSendMessage;
-    private ImageButton buttonReturn;
-    private TextView chatName;
-
-    private MessageAdapter messageAdapter;
-    private ArrayList<Message> messageList;
-
-    private User chatTo; // 聊天对象
     private User me; // 当前用户
+    private User chatTo; // 聊天对象
+    private ArrayList<Message> mMessages; // 消息列表
+    private MySQLDao mDao; // 数据库操作对象
+    private MessageAdapter mAdapter; // 消息适配器
 
-
+    private EditText mInputEt; // 输入框
+    private Button mSendBtn; // 发送按钮
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        // 从布局文件中获取视图
-        recyclerViewMessages = findViewById(R.id.recyclerViewMessages);
-        editTextMessageInput = findViewById(R.id.editTextMessageInput);
-        buttonSendMessage = findViewById(R.id.buttonSendMessage);
-        chatName = findViewById(R.id.chat_name);
-        buttonReturn = findViewById(R.id.chat_return);
+        mDao = new MySQLDao();
+        me = getIntent().getParcelableExtra("me"); // 从intent中获取当前用户信息
+        chatTo = getIntent().getParcelableExtra("chatTo"); // 从intent中获取聊天对象信息
 
-        chatTo = getIntent().getParcelableExtra("chatTo");//从intent取出chatTo
-        me = getIntent().getParcelableExtra("me");//从intent取出me
-        chatName.setText(chatTo.getName());
+        mInputEt = findViewById(R.id.editTextMessageInput); // 获取输入框
+        mSendBtn = findViewById(R.id.buttonSendMessage); // 获取发送按钮
 
-        // 初始化消息列表和适配器
-        messageList = new ArrayList<>();
-        loadMessages();
+        RecyclerView mRv = findViewById(R.id.recyclerViewMessages); // 获取消息列表视图
 
-        messageAdapter = new MessageAdapter(this,messageList,me);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this); // 创建一个线性布局管理器
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL); // 设置垂直方向
+        mRv.setLayoutManager(linearLayoutManager); // 为消息列表视图设置布局管理器
 
-        // 为RecyclerView设置适配器和布局管理器
-        recyclerViewMessages.setAdapter(messageAdapter);
-        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
+        mMessages = mDao.queryMessagesByUserId(me.getUid(), chatTo.getUid()); // 查询当前用户和聊天对象的消息记录
 
-        //为返回按钮设置监听
-        buttonReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        // 为发送按钮设置点击监听器
-        buttonSendMessage.setOnClickListener(new View.OnClickListener() {
+        mAdapter = new MessageAdapter(this, mMessages, me); // 创建一个消息适配器，传入上下文、消息列表和当前用户信息
+        mRv.setAdapter(mAdapter); // 为消息列表视图设置适配器
+
+        mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 获取输入文本并去除任何空白
-                String input = editTextMessageInput.getText().toString().trim();
-
-                // 检查输入是否不为空
-                if (!input.isEmpty()) {
-                    // 创建一个新的消息对象，传入输入文本和当前时间
-                    Message message = new Message(input, me,chatTo , new Date());
-
-                    // 将消息发送到聊天频道
-                    sendMessage(message);
-
-                    // 将消息添加到列表并通知适配器
-                    messageList.add(message);
-                    messageAdapter.notifyItemInserted(messageList.size() - 1);
-
-                    // 滚动到RecyclerView的底部
-                    recyclerViewMessages.scrollToPosition(messageList.size() - 1);
-
-                    // 清空输入文本框
-                    editTextMessageInput.setText("");
+                // 点击发送按钮时，获取输入框的内容，并判断是否为空
+                String content = mInputEt.getText().toString();
+                if (!content.isEmpty()) {
+                    // 如果不为空，创建一个新的消息对象，设置其属性
+                    Message message = new Message(0, content, me, false, chatTo.getUid(), false, new Date());
+                    mDao.insertMessage(message); // 将新的消息插入到数据库中
+                    mMessages.add(message); // 将新的消息添加到消息列表中
+                    mAdapter.notifyItemInserted(mMessages.size() - 1); // 通知适配器有新的项目插入到最后一个位置
+                    mRv.scrollToPosition(mMessages.size() - 1); // 让消息列表视图滚动到最后一个位置
+                    mInputEt.setText(""); // 清空输入框的内容
                 }
             }
         });
     }
 
-    // 一个方法来加载聊天频道的消息
-    private void loadMessages() {
-        // TODO: 实现加载聊天频道的消息
-        messageList.add(new Message("你好",  chatTo, me, new Date()));
-        messageList.add(new Message("你好，很高兴认识你", me,chatTo,  new Date()));
-        messageList.add(new Message("我也是", chatTo, me, new Date()));
-        messageList.add(new Message("你喜欢什么？",me,chatTo,  new Date()));
-        messageList.add(new Message("我喜欢编程", chatTo, me, new Date()));
-    }
-
-    // 一个方法来将消息发送到聊天频道
-    private void sendMessage(Message message) {
-        // TODO: 实现消息发送到服务器
-    }
 }
-

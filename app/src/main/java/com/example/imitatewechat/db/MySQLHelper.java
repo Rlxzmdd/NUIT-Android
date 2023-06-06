@@ -2,38 +2,51 @@ package com.example.imitatewechat.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-/**
- * Tips：Helper类封装了数据库连接和关闭的方法
- */
 public class MySQLHelper {
-    private static final String URL = "jdbc:mysql://localhost:3306/wechat"; // 数据库的URL
-    private static final String USER = "root"; // 数据库的用户名
-    private static final String PASSWORD = "12341948"; // 数据库的密码
+    // 定义数据库的连接参数
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3306/db_wechat";
+    private static final String USER = "root";
+    private static final String PASSWORD = "12341948";
 
-    // 一个静态方法来获取数据库连接
-    public static Connection getConnection() {
+    // 加载驱动
+    static {
+        try {
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 获取数据库连接对象
+    public Connection getConnection() {
         Connection conn = null;
         try {
-            // 加载驱动类
-            Class.forName("com.mysql.jdbc.Driver");
-            // 获取连接对象
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return conn;
     }
 
-    // 一个静态方法来关闭数据库连接
-    public static void closeConnection(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+    // 关闭数据库资源
+    public void close(ResultSet rs, Statement st, Connection conn) {
+        try {
+            if (rs != null) {
+                rs.close();
             }
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

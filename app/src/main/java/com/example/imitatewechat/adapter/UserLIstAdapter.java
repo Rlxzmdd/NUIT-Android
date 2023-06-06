@@ -37,7 +37,7 @@ public class UserLIstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 为每个好友项目填充布局文件
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_list_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_list_layout, parent, false);
         // 创建并返回一个新的视图持有者，传入填充好的视图
         return new NormalHolder(view);
     }
