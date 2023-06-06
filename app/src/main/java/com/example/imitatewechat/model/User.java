@@ -1,12 +1,11 @@
 package com.example.imitatewechat.model;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Friend implements Parcelable {
+public class User implements Parcelable {
     // 其他属性和方法
 
     private String name; // 好友的名字
@@ -15,25 +14,25 @@ public class Friend implements Parcelable {
     private String msg; // 好友的最近一条消息
     private Drawable drawable;
     private boolean flag = false;
-    public Friend(int id, String name, int pic, String msg) {
+    public User(int id, String name, int pic, String msg) {
         this.id = id;
         this.name = name;
         this.pic = pic;
         this.msg = msg;
     }
-    public Friend(int id, String name, int pic) {
+    public User(int id, String name, int pic) {
         this.id = id;
         this.name = name;
         this.pic = pic;
     }
-    public Friend(int id, String name, Drawable pic) {
+    public User(int id, String name, Drawable pic) {
         this.id = id;
         this.name = name;
         this.drawable = pic;
         flag = true;
     }
 
-    public Friend(int id, String name) {
+    public User(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -75,16 +74,16 @@ public class Friend implements Parcelable {
         dest.writeString(msg);
     }
 
-    public static final Creator<Friend> CREATOR = new Creator<Friend>() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
-        public Friend createFromParcel(Parcel in) {
+        public User createFromParcel(Parcel in) {
             // 从Parcel中读取对象的属性，返回一个Friend对象
-            return new Friend(in.readInt(), in.readString(), in.readInt(), in.readString());
+            return new User(in.readInt(), in.readString(), in.readInt(), in.readString());
         }
 
         @Override
-        public Friend[] newArray(int size) {
-            return new Friend[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
 }

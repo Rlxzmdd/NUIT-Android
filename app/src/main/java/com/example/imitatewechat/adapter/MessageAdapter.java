@@ -1,7 +1,6 @@
 package com.example.imitatewechat.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.model.Friend;
+import com.example.imitatewechat.model.User;
 import com.example.imitatewechat.model.Message;
 
 import java.text.SimpleDateFormat;
@@ -27,9 +26,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int TYPE_LEFT = 0; // 左边布局的类型
     private static final int TYPE_RIGHT = 1; // 右边布局的类型
 
-    private Friend mMe; // 当前用户
+    private User mMe; // 当前用户
     // 一个构造方法来创建一个适配器，传入上下文、消息列表和当前用户ID参数
-    public MessageAdapter(Context context, ArrayList<Message> messages, Friend me) {
+    public MessageAdapter(Context context, ArrayList<Message> messages, User me) {
         mContext = context;
         mMessages = messages;
         mMe = me;
@@ -61,7 +60,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String time = sdf.format(message.getTime());
         // 获取消息发送者
-        Friend sender = message.getSender ();
+        User sender = message.getSender ();
         // 判断视图持有者的类型并设置文本和图片
         if (holder instanceof LeftHolder) { // 如果是左边视图持有者
             LeftHolder leftHolder = (LeftHolder) holder; // 强制类型转换

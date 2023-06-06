@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.imitatewechat.util.DataUtils;
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.model.Friend;
+import com.example.imitatewechat.model.User;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnVoice;
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "登录中", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-            Friend me = new Friend(0, finalSaveName, R.drawable.li);// 创建我
+            User me = new User(0, finalSaveName, R.drawable.li);// 创建我
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {

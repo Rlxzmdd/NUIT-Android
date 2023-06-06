@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.example.imitatewechat.model.Friend;
+import com.example.imitatewechat.model.User;
 import com.example.imitatewechat.model.Message;
 
 /**
@@ -95,10 +95,10 @@ public class MySQLDao {
         }
     }
 
-    public Friend queryUserById(int id) {
+    public User queryUserById(int id) {
         Connection conn = helper.getConnection();
         String sql = "SELECT * FROM user WHERE id = ?";
-        Friend friend = null;
+        User user = null;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
@@ -108,7 +108,7 @@ public class MySQLDao {
                 String password = rs.getString("password");
                 int age = rs.getInt("age");
                 String pic = rs.getString("pic");
-                friend = new Friend(id, name);
+                user = new User(id, name);
 //                friend = new Friend(id, name, pic);
 //                friend.setPassword(password);
 //                friend.setAge(age);
@@ -120,21 +120,21 @@ public class MySQLDao {
         } finally {
             helper.closeConnection(conn);
         }
-        return friend;
+        return user;
     }
 
-    public ArrayList<Friend> queryFriendsByUserId(int user_id) {
+    public ArrayList<User> queryFriendsByUserId(int user_id) {
         Connection conn = helper.getConnection();
         String sql = "SELECT * FROM friend WHERE user_id = ?";
-        ArrayList<Friend> friends = new ArrayList<>();
+        ArrayList<User> users = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, user_id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int friend_id = rs.getInt("friend_id");
-                Friend friend = queryUserById(friend_id);
-                friends.add(friend);
+                User user = queryUserById(friend_id);
+                users.add(user);
             }
             rs.close();
             ps.close();
@@ -143,7 +143,7 @@ public class MySQLDao {
         } finally {
             helper.closeConnection(conn);
         }
-        return friends;
+        return users;
     }
 
     public ArrayList<Message> queryMessagesByUserId(int user_id) {
@@ -160,8 +160,8 @@ public class MySQLDao {
                 String content = rs.getString("content");
                 int sender_id = rs.getInt("sender_id");
                 int receiver_id = rs.getInt("receiver_id");
-                Friend sender = queryUserById(sender_id);
-                Friend receiver = queryUserById(receiver_id);
+                User sender = queryUserById(sender_id);
+                User receiver = queryUserById(receiver_id);
                 Message message = new Message(content, sender, receiver, new Date());
                 messages.add(message);
             }

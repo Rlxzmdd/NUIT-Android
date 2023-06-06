@@ -3,7 +3,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +12,11 @@ import android.widget.TextView;
 
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.adapter.MessageAdapter;
-import com.example.imitatewechat.model.Friend;
+import com.example.imitatewechat.model.User;
 import com.example.imitatewechat.model.Message;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -31,8 +29,8 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private ArrayList<Message> messageList;
 
-    private Friend chatTo; // 聊天对象
-    private Friend me; // 当前用户
+    private User chatTo; // 聊天对象
+    private User me; // 当前用户
 
 
 

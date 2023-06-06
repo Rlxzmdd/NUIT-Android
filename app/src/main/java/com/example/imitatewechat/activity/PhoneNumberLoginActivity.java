@@ -52,7 +52,9 @@ public class PhoneNumberLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 使用dao封装的方法查询数据库中的数据，如果账户密码匹配成功，则允许用户进行登录
-                if(LoginActivity.dao.query(account.getText().toString(),password.getText().toString())){
+                if(true){
+                    //todo 新增验证逻辑
+                //if(LoginActivity.dao.query(account.getText().toString(),password.getText().toString())){
                     // 成功登陆后将用户名存入SharedPreferences中，以便重新启动程序时，能显示最新的用户名
                     (new DataUtils(view.getContext())).saveName(account.getText().toString());
                     // 手机弹窗交互
