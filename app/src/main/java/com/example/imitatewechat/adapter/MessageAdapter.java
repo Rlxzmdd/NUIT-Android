@@ -1,6 +1,7 @@
 package com.example.imitatewechat.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +66,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             LeftHolder leftHolder = (LeftHolder) holder; // 强制类型转换
             leftHolder.contentTv.setText(message.getContent());
             leftHolder.timeTv.setText(time);
-            leftHolder.picImv.setImageDrawable(sender.getPic(this.mContext));
+            leftHolder.picImv.setImageDrawable(Drawable.createFromPath(sender.getPic()));
             leftHolder.nameTv.setText(sender.getName());
         } else { // 如果是右边视图持有者
             RightHolder rightHolder = (RightHolder) holder; // 强制类型转换
             rightHolder.contentTv.setText(message.getContent());
             rightHolder.timeTv.setText(time);
-            rightHolder.picImv.setImageDrawable(sender.getPic(this.mContext));
+            rightHolder.picImv.setImageDrawable(Drawable.createFromPath(sender.getPic()));
             rightHolder.nameTv.setText(sender.getName());
         }
     }

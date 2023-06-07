@@ -15,6 +15,8 @@ import com.example.imitatewechat.util.DataUtils;
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.model.User;
 
+// LoginActivity已被抛弃，部份功能由LoadingActivity取代
+@Deprecated
 public class LoginActivity extends AppCompatActivity {
     private Button btnVoice;
     private Button btnChange;
@@ -31,25 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         btnChange = findViewById(R.id.btn_change);
         disName = findViewById(R.id.display_name);
 
-        String saveName = (new DataUtils(this)).getName();
-        if (!(saveName.length() == 0)) {
-            disName.setText(saveName);
-        }
-        if (saveName.length() == 0) {
-            saveName = "周子涵";
-        }
-
-        String finalSaveName = saveName;
         btnVoice.setOnClickListener(view -> {
             Toast toast = Toast.makeText(getApplicationContext(), "登录中", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-            User me = new User(0, finalSaveName, R.drawable.li);// 创建我
+//            User me = new User(0, finalSaveName, R.drawable.li);// 创建我
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("me", me);
+//                    intent.putExtra("me", me);
                     startActivity(intent);
                     finish();
                 }

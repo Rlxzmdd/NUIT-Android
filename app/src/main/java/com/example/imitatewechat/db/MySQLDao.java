@@ -1,5 +1,8 @@
 package com.example.imitatewechat.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,17 +10,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.example.imitatewechat.model.ChatFriend;
+import com.example.imitatewechat.model.Friend;
+import com.example.imitatewechat.model.Group;
 import com.example.imitatewechat.model.User;
 import com.example.imitatewechat.model.Message;
 
 /**
  * Tips：Dao类封装了一系列数据库操作，比如插入条目，搜索条目等等
  */
-public class MySQLDao {
+public class MySQLDao implements Parcelable{
     private final MySQLHelper SqlHelper;
 
     public MySQLDao() {
         SqlHelper = new MySQLHelper();
+    }
+
+    public MySQLHelper getSqlHelper() {
+        return SqlHelper;
     }
 
     // 一个方法来根据用户id查询用户信息
@@ -48,35 +58,77 @@ public class MySQLDao {
         return user;
     }
 
-    // 一个方法来根据用户id查询用户的好友列表
-    public ArrayList<User> queryFriendsByUserId(int user_uid) {
-        ArrayList<User> friends = new ArrayList<>();
+    public User queryUserByUserAndPass(String username,String pass){
+        User user = null;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             conn = SqlHelper.getConnection();
-            String sql = "SELECT * FROM t_user WHERE uid IN (SELECT friend_uid FROM t_friend WHERE user_uid = ?)";
+            String sql = "SELECT * FROM t_user WHERE name = ? and password = ?";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, user_uid);
+            ps.setString(1, username);
+            ps.setString(2, pass);
             rs = ps.executeQuery();
-            while (rs.next()) {
+            System.out.println(rs);
+            if (rs.next()) {
                 int uid = rs.getInt("uid");
                 String name = rs.getString("name");
+                String password = rs.getString("password");
                 String phone = rs.getString("phone");
                 int age = rs.getInt("age");
                 String pic = rs.getString("pic");
-                String msg = rs.getString("msg");
-                User friend = new User(uid, name, pic, msg);
-                friends.add(friend);
+                user = new User(uid, name, password, phone, age, pic);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             SqlHelper.close(rs, ps, conn);
         }
-        return friends;
+        return user;
     }
+    // 一个方法来根据用户id查询用户的好友列表
+            /*
+            根据User.getUid()为key获取Message中的聊天记录，筛选出不重复的（is_group和receiver_id）。
+            根据is_group去对应的表单以receiver_id为搜索信息你（is_group为true，去t_group。为false去t_uer
+            最终整合输出为 is_group,receiver_id,name,msg
+             */
+    // 该方法目前没有实现群组的情况，后续看我心情写不写
+    public ArrayList<ChatFriend> queryChatListByUser(User user) {
+        ArrayList<ChatFriend> chatItems = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = SqlHelper.getConnection();
+            // 使用一条SQL语句来查询聊天列表
+            String sql = "select (row_number() over (order by m.time_send desc)) as id, \n" +
+                    "       m.sender_uid as uid, u.name, u.phone, u.age, u.pic, m.content, m.time_send\n" +
+                    "from t_message as m left join t_user as u\n" +
+                    "on m.is_group = false and u.uid = m.sender_uid\n" +
+                    "where m.receiver_id = ? and is_group = false;";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, user.getUid()); // 设置用户id参数
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int index = rs.getInt("id");
+                int uid = rs.getInt("uid");
+                String name = rs.getString("name");
+                int age = rs.getInt("age");
+                String pic = rs.getString("pic"); // 获取头像
+                String phone = rs.getString("phone"); // 获取电话
+                String content = rs.getString("content"); // 获取年龄
+                Date time_send = rs.getDate("time_send");
+                chatItems.add(new Friend(index,uid, name,phone,age,pic,content));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            SqlHelper.close(rs, ps, conn);
+        }
+        return chatItems;
+    }
+
 
     // 一个方法来根据用户id和聊天对象id查询消息列表
     public ArrayList<Message> queryMessagesByUserId(int user_id, int chatTo_id) {
@@ -180,5 +232,35 @@ public class MySQLDao {
             SqlHelper.close(null, ps, conn);
         }
     }
+// 实现Parcelable接口需要重写以下方法
 
+    // 从Parcel中读取数据，并赋值给对象的各个字段
+    protected MySQLDao(Parcel in) {
+        SqlHelper = in.readParcelable(MySQLHelper.class.getClassLoader());
+    }
+
+    // 将对象的各个字段写入到Parcel中
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(SqlHelper, flags);
+    }
+
+    // 返回一个标志位，一般返回0即可
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // 生成一个静态常量Creator，用于创建MySQLDao对象的数组或列表等容器
+    public static final Parcelable.Creator<MySQLDao> CREATOR = new Parcelable.Creator<MySQLDao>() {
+        @Override
+        public MySQLDao createFromParcel(Parcel in) {
+            return new MySQLDao(in);
+        }
+
+        @Override
+        public MySQLDao[] newArray(int size) {
+            return new MySQLDao[size];
+        }
+    };
 }

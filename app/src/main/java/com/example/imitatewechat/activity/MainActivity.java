@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.adapter.UserLIstAdapter;
+import com.example.imitatewechat.adapter.MessageListAdapter;
+import com.example.imitatewechat.adapter.UserListAdapter;
 import com.example.imitatewechat.db.MySQLDao;
 import com.example.imitatewechat.model.User;
 
@@ -17,10 +18,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<User> mUsers = new ArrayList<>(); // 好友列表
     private MySQLDao mDao; // 数据库操作对象
-    private User me;//我一个特殊的friend
-    private void generateDatas() {
-        //todo 实现从数据库加载好友信息
-        mUsers = mDao.queryUsersByUserId(me.getUid());
+    private User currentUser;//我一个特殊的friend
+    private void generateData() {
+        //更新 User 中的好友关系
+        currentUser.setChats(mDao.queryChatListByUser(currentUser));
 //        mUsers.add(new User(1,"陈晓贤", R.drawable.cai, "你试试看通过那个找回密码吧"));
 //        mFriends.add(new Friend(2,"在佛山也要爬山", R.drawable.shujia, "我:什么时候去爬山"));
 //        mUsers.add(new User(3,"东软要你死 你活不到三更", R.drawable.neu, "大哥: 嗯嗯路上"));
@@ -37,17 +38,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        generateDatas();
+
         RecyclerView mRv = findViewById(R.id.message_list);
-        mDao = new MySQLDao();
-        me = getIntent().getParcelableExtra("me");//从intent取出me
+        currentUser = getIntent().getParcelableExtra("currentUser");
+        mDao = getIntent().getParcelableExtra("mysqlDao");
+
+        generateData();
 
         //线性布局
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRv.setLayoutManager(linearLayoutManager);
 
-        UserLIstAdapter adapter = new UserLIstAdapter(this,me, mUsers);
+        MessageListAdapter adapter = new MessageListAdapter(this,currentUser, mUsers);
         mRv.setAdapter(adapter);
     }
 }

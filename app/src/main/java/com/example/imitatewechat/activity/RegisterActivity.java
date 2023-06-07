@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (check_nickname&&check_password&&check_birth&&agree.isChecked()){
                     // 如果注册信息填写完善，则将必要用户信息数据存入数据库
-                    LoginActivity.dao.insert(nickname.getText().toString(),password.getText().toString());
+//                    LoginActivity.dao.insert(nickname.getText().toString(),password.getText().toString());
                     // 将必要数据写入SharedPreferences,以便实现自动填充
                     Context context = RegisterActivity.this;
                     SharedPreferences sharedPreferences = context.getSharedPreferences("quickLogin",MODE_PRIVATE);

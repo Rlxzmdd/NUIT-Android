@@ -20,13 +20,13 @@ import android.content.Intent;
 import com.example.imitatewechat.activity.ChatActivity;
 
 // 一个类来表示一个适配器，用于在RecyclerView中显示好友
-public class UserLIstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private ArrayList<User> mUsers; // 好友列表
     private User mMe;
 
     // 一个构造方法来创建一个适配器，传入上下文和好友列表参数
-    public UserLIstAdapter(Context context, User me, ArrayList<User> users) {
+    public UserListAdapter(Context context, User me, ArrayList<User> users) {
         mMe = me;
         mContext = context;
         mUsers = users;
@@ -48,10 +48,10 @@ public class UserLIstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // 获取给定位置的好友对象
         User user = mUsers.get(position);
         // 将好友的名字、头像和最近一条消息设置到视图持有者中的文本视图和图片视图上
-        ((NormalHolder) holder).mName.setText(user.getName());
-        ((NormalHolder) holder).mMsg.setText(user.getMsg());
-        ((NormalHolder) holder).mPic.setImageDrawable(user.getPic(this.mContext));
-        ((NormalHolder) holder).mId.setText(String.valueOf(user.getId()));
+//        ((NormalHolder) holder).mName.setText(user.getName());
+//        ((NormalHolder) holder).mMsg.setText(user.getCon());
+//        ((NormalHolder) holder).mPic.setImageDrawable(user.getPic(this.mContext));
+//        ((NormalHolder) holder).mId.setText(String.valueOf(user.getId()));
     }
 
     // 一个方法来获取RecyclerView中的项目数量
@@ -80,12 +80,12 @@ public class UserLIstAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View v) {
                     // 使用意图来启动ChatActivity，并传递好友Friend作为参数
                     Intent intent = new Intent(mContext, ChatActivity.class);
-                    intent.putExtra("chatTo", new User(
-                            Integer.parseInt(mId.getText().toString()),
-                            mName.getText().toString(),
-                            mPic.getDrawable()
-                            // todo 修复聊天对象图片显示
-                    ));
+//                    intent.putExtra("chatTo", new User(
+//                            Integer.parseInt(mId.getText().toString()),
+//                            mName.getText().toString(),
+//                            mPic.getDrawable()
+//                            // todo 修复聊天对象图片显示
+//                    ));
                     intent.putExtra("me",mMe);
                     mContext.startActivity(intent);
                 }

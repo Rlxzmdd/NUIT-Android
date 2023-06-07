@@ -5,50 +5,21 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Friend implements Parcelable {
-    private int uid; // 好友的id
-    private String name; // 好友的名字
-    private String phone; // 好友的手机号
-    private int age; // 好友的年龄
-    private String pic; // 好友的头像
-    private String msg; // 好友的最近一条消息
+import com.example.imitatewechat.util.ChatType;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public Friend(int uid, String name, String phone, int age, String pic,String msg) {
+public class Friend extends ChatFriend implements Parcelable {
+    private final String phone; // 好友的手机号
+    private final int age; // 好友的年龄
+    private final int uid;
+    public Friend(int cid,int uid, String name, String phone, int age, String pic,String msg) {
+        super(ChatType.User,cid,name,pic,msg);
         this.uid = uid;
-        this.name = name;
         this.phone = phone;
         this.age = age;
-        this.pic = pic;
-        this.msg = msg;
     }
 
-//
-//    public Friend(int uid, String name, String pic, String msg) {
-//        this.uid = uid;
-//        this.name = name;
-//        this.pic = pic;
-//        this.msg = msg;
-//    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public int getUid() {
-        return uid;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public String getPhone() {
         return phone;
@@ -58,33 +29,40 @@ public class Friend implements Parcelable {
         return age;
     }
 
-    public String getMsg() {
-        return msg;
+    @Override
+    public int getObjectId() {
+        return this.uid;
+    }
+    // 实现Parcelable接口需要重写以下方法
+
+    // 从Parcel中读取数据，并赋值给对象的各个字段
+    protected Friend(Parcel in) {
+        super(in); // 调用父类的构造方法，读取父类的字段
+        phone = in.readString();
+        age = in.readInt();
+        uid = in.readInt();
     }
 
+    // 将对象的各个字段写入到Parcel中
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags); // 调用父类的方法，写入父类的字段
+        dest.writeString(phone);
+        dest.writeInt(age);
+        dest.writeInt(uid);
+    }
 
-    // 实现Parcelable接口的方法
+    // 返回一个标志位，一般返回0即可
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        // 把对象的属性写入Parcel中
-        dest.writeInt(uid);
-        dest.writeString(name);
-        dest.writeString(phone);
-        dest.writeInt(age);
-        dest.writeString(pic);
-        dest.writeString(msg);
-    }
-
+    // 生成一个静态常量Creator，用于创建Friend对象的数组或列表等容器
     public static final Creator<Friend> CREATOR = new Creator<Friend>() {
         @Override
         public Friend createFromParcel(Parcel in) {
-            // 从Parcel中读取对象的属性，返回一个Friend对象
-            return new Friend(in.readInt(), in.readString(),in.readString(), in.readInt(), in.readString(), in.readString());
+            return new Friend(in);
         }
 
         @Override
@@ -92,4 +70,5 @@ public class Friend implements Parcelable {
             return new Friend[size];
         }
     };
+
 }
