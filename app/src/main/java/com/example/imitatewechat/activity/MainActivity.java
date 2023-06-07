@@ -5,23 +5,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.adapter.MessageListAdapter;
 import com.example.imitatewechat.adapter.UserListAdapter;
-import com.example.imitatewechat.db.MySQLDao;
+import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.model.User;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<User> mUsers = new ArrayList<>(); // 好友列表
-    private MySQLDao mDao; // 数据库操作对象
+    //private ArrayList<User> mUsers = new ArrayList<>(); // 好友列表
+    private SQLiteDao mDao; // 数据库操作对象
     private User currentUser;//我一个特殊的friend
     private void generateData() {
+        Log.d("asd",currentUser.toString());
         //更新 User 中的好友关系
-        currentUser.setChats(mDao.queryChatListByUser(currentUser));
+        currentUser
+                .setChats(
+                        mDao
+                                .queryChatListByUser(currentUser));
 //        mUsers.add(new User(1,"陈晓贤", R.drawable.cai, "你试试看通过那个找回密码吧"));
 //        mFriends.add(new Friend(2,"在佛山也要爬山", R.drawable.shujia, "我:什么时候去爬山"));
 //        mUsers.add(new User(3,"东软要你死 你活不到三更", R.drawable.neu, "大哥: 嗯嗯路上"));
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView mRv = findViewById(R.id.message_list);
         currentUser = getIntent().getParcelableExtra("currentUser");
-        mDao = getIntent().getParcelableExtra("mysqlDao");
+        mDao = new SQLiteDao(this);
 
         generateData();
 
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRv.setLayoutManager(linearLayoutManager);
 
-        MessageListAdapter adapter = new MessageListAdapter(this,currentUser, mUsers);
+        MessageListAdapter adapter = new MessageListAdapter(this,currentUser, currentUser.getChats());
         mRv.setAdapter(adapter);
     }
 }

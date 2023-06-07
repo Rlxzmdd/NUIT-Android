@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.imitatewechat.db.MySQLDao;
+import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.model.User;
 import com.example.imitatewechat.util.DataUtils;
 import com.example.imitatewechat.R;
@@ -25,7 +25,7 @@ public class PhoneNumberLoginActivity extends AppCompatActivity {
     private Button login_btn;
     private TextView register;
     private Handler handler = new Handler();
-    public MySQLDao mDao;
+    public SQLiteDao mDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class PhoneNumberLoginActivity extends AppCompatActivity {
         login_btn = findViewById(R.id.btn_login);
         register = findViewById(R.id.register);
 
-        mDao = getIntent().getParcelableExtra("mysqlDao");//从intent取出me
+        mDao = new SQLiteDao(this);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,12 +61,11 @@ public class PhoneNumberLoginActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Intent intent = new Intent(PhoneNumberLoginActivity.this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            intent.putExtra("mysqlDao", mDao); // 传递 数据库信息
                             intent.putExtra("currentUser", currentUser); // 传递当前用户信息
+                            startActivity(intent);
                             finish();
                         }
-                    },500);
+                    },1000);
                 }else if(account.getText().toString().length()!=0 && password.getText().toString().length()!=0){
                     Toast toast = Toast.makeText(getApplicationContext(),"账号或密码错误",Toast.LENGTH_SHORT);
                     toast.show();

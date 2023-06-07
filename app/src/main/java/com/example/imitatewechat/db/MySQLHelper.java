@@ -1,5 +1,6 @@
 package com.example.imitatewechat.db;
 
+import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -12,7 +13,7 @@ import java.sql.Statement;
 public class MySQLHelper implements Parcelable {
     // 定义数据库的连接参数
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static String URL = "jdbc:mysql://mysql.sqlpub.com:3306/db_wechat?characterEncoding=utf-8&serverTimezone=UTC";
+    private static String URL = "jdbc:mysql://mysql.sqlpub.com:3306/db_wechat?characterEncoding=utf-8&serverTimezone=UTC&useSSL=false";
     private static String USER = "db_wechat";
     private static String PASSWORD = "86a5d4caa5cb275e";
 

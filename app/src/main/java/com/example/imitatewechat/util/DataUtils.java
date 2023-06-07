@@ -5,7 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.imitatewechat.db.MySQLDao;
+import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.exception.UserNotFoundException;
 import com.example.imitatewechat.model.User;
 
@@ -23,7 +23,7 @@ public class DataUtils {
         editor.putString("user_name", user.getName());
         editor.apply();
     }
-    public User getUser(MySQLDao dao) {
+    public User getUser(SQLiteDao dao) {
         SharedPreferences settings = this.context.getSharedPreferences("quickLogin",MODE_PRIVATE);
         int uid = settings.getInt("user_id",-1);
         if(uid == -1)

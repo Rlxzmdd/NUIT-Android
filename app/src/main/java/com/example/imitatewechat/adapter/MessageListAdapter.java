@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.activity.ChatActivity;
-import com.example.imitatewechat.db.MySQLDao;
+import com.example.imitatewechat.db.SQLiteDao;
+import com.example.imitatewechat.model.ChatFriend;
 import com.example.imitatewechat.model.Message;
 import com.example.imitatewechat.model.User;
 
@@ -23,14 +24,14 @@ import java.util.ArrayList;
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
     private Context mContext; // 上下文对象
     private User currentUser; // 当前用户
-    private ArrayList<User> mUsers; // 有聊天记录的好友和群组列表
-    private MySQLDao mDao; // 数据库操作对象
+    private ArrayList<ChatFriend> mUsers; // 有聊天记录的好友和群组列表
+    private SQLiteDao mDao; // 数据库操作对象
 
-    public MessageListAdapter(Context context, User me, ArrayList<User> users) {
+    public MessageListAdapter(Context context, User me, ArrayList<ChatFriend> users) {
         this.mContext = context;
         this.currentUser = me;
         this.mUsers = users;
-        this.mDao = new MySQLDao();
+        this.mDao = new SQLiteDao(context);
     }
 
     @NonNull
@@ -44,10 +45,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // 为子项绑定数据
-        User user = mUsers.get(position); // 获取当前位置的用户对象
-        holder.itemImg.setImageDrawable(Drawable.createFromPath(user.getPic())); // 设置用户头像
-        holder.itemTv.setText(user.getName()); // 设置用户昵称
-        ArrayList<Message> messages = mDao.queryMessagesByUserId(currentUser.getUid(), user.getUid()); // 查询当前用户和该用户的聊天记录
+        ChatFriend friend = mUsers.get(position); // 获取当前位置的用户对象
+        holder.itemImg.setImageDrawable(Drawable.createFromPath(friend.getPic())); // 设置用户头像
+        holder.itemTv.setText(friend.getName()); // 设置用户昵称
+        ArrayList<Message> messages = mDao.queryMessagesByUserId(currentUser, friend.getObjectId()); // 查询当前用户和该用户的聊天记录
         if (!messages.isEmpty()) {
             Message lastMessage = messages.get(messages.size() - 1); // 获取最后一条消息
             holder.itemMsg.setText(lastMessage.getContent()); // 设置最后一条消息的内容
@@ -58,7 +59,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
                 // 点击子项时，跳转到聊天界面，并传递当前用户和聊天对象的信息
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("currentUser", currentUser);
-                intent.putExtra("chatTo", user);
+                intent.putExtra("chatTo", friend);
                 mContext.startActivity(intent);
             }
         });

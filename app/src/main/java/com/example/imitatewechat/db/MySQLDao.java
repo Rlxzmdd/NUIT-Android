@@ -1,8 +1,5 @@
 package com.example.imitatewechat.db;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +16,7 @@ import com.example.imitatewechat.model.Message;
 /**
  * Tips：Dao类封装了一系列数据库操作，比如插入条目，搜索条目等等
  */
-public class MySQLDao implements Parcelable{
+public class MySQLDao{
     private final MySQLHelper SqlHelper;
 
     public MySQLDao() {
@@ -87,13 +84,6 @@ public class MySQLDao implements Parcelable{
         }
         return user;
     }
-    // 一个方法来根据用户id查询用户的好友列表
-            /*
-            根据User.getUid()为key获取Message中的聊天记录，筛选出不重复的（is_group和receiver_id）。
-            根据is_group去对应的表单以receiver_id为搜索信息你（is_group为true，去t_group。为false去t_uer
-            最终整合输出为 is_group,receiver_id,name,msg
-             */
-    // 该方法目前没有实现群组的情况，后续看我心情写不写
     public ArrayList<ChatFriend> queryChatListByUser(User user) {
         ArrayList<ChatFriend> chatItems = new ArrayList<>();
         Connection conn = null;
@@ -165,52 +155,6 @@ public class MySQLDao implements Parcelable{
         return messages;
     }
 
-    public ArrayList<User> queryUsersByUserId(int user_id) {
-        ArrayList<User> users = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = SqlHelper.getConnection();
-            String sql = "SELECT * FROM t_user WHERE uid IN (SELECT DISTINCT receiver_id FROM t_message WHERE sender_uid = ?) OR uid IN (SELECT DISTINCT sender_uid FROM t_message WHERE receiver_id = ?)";
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, user_id);
-            ps.setInt(2, user_id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                int uid = rs.getInt("uid");
-                String name = rs.getString("name");
-                String phone = rs.getString("phone");
-                int age = rs.getInt("age");
-                String pic = rs.getString("pic");
-                User user = new User(uid, name, phone, age, pic);
-                users.add(user);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            SqlHelper.close(rs, ps, conn);
-        }
-        return users;
-    }
-
-    // 一个方法来根据消息id更新消息的撤回状态
-    public void updateMessage(int mid, boolean isWithdraw) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = SqlHelper.getConnection();
-            String sql = "UPDATE t_message SET is_withdraw = ? WHERE mid = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setBoolean(1, isWithdraw);
-            ps.setInt(2, mid);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            SqlHelper.close(null, ps, conn);
-        }
-    }
 
     // 一个方法来插入一条新的消息到数据库中
     public void insertMessage(Message message) {
@@ -232,35 +176,4 @@ public class MySQLDao implements Parcelable{
             SqlHelper.close(null, ps, conn);
         }
     }
-// 实现Parcelable接口需要重写以下方法
-
-    // 从Parcel中读取数据，并赋值给对象的各个字段
-    protected MySQLDao(Parcel in) {
-        SqlHelper = in.readParcelable(MySQLHelper.class.getClassLoader());
-    }
-
-    // 将对象的各个字段写入到Parcel中
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(SqlHelper, flags);
-    }
-
-    // 返回一个标志位，一般返回0即可
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    // 生成一个静态常量Creator，用于创建MySQLDao对象的数组或列表等容器
-    public static final Parcelable.Creator<MySQLDao> CREATOR = new Parcelable.Creator<MySQLDao>() {
-        @Override
-        public MySQLDao createFromParcel(Parcel in) {
-            return new MySQLDao(in);
-        }
-
-        @Override
-        public MySQLDao[] newArray(int size) {
-            return new MySQLDao[size];
-        }
-    };
 }
