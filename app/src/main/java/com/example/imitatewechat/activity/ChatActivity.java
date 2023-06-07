@@ -36,7 +36,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         mDao = new SQLiteDao(this);
-        me = getIntent().getParcelableExtra("me"); // 从intent中获取当前用户信息
+        me = getIntent().getParcelableExtra("currentUser"); // 从intent中获取当前用户信息
         chatTo = getIntent().getParcelableExtra("chatTo"); // 从intent中获取聊天对象信息
 
         mInputEt = findViewById(R.id.editTextMessageInput); // 获取输入框

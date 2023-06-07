@@ -99,7 +99,7 @@ public class SQLiteDao {
                     "       m.sender_uid as uid, u.name, u.phone, u.age, u.pic, m.content, m.time_send\n" +
                     "from t_message as m left join t_user as u\n" +
                     "on m.is_group = false and u.uid = m.sender_uid\n" +
-                    "where m.receiver_id = 1 and is_group = false;";
+                    "where m.receiver_id = ? and is_group = false;";
             // 执行查询操作，返回Cursor对象
             cursor = db.rawQuery(sql, new String[]{String.valueOf(user.getUid())});
             while (cursor.moveToNext()) {
