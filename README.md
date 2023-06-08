@@ -35,5 +35,9 @@ Start -> LoadingActivity 验证本地数据，查看是否登录
        - 接收 ChatFriend
        - 获取 id，通过 SQLiteDao 获取聊天记录并加载
 
-Model 含义
-   - 
+### Model 含义
+   - ChatFriend 聊天列表的对象，可衍生出子类。拥有一个 ArrayList<Message> 记录当前聊天信息
+     - Friend 好友聊天对象，但个人
+     - Group 群组聊天对象，群聊，实际逻辑未实现
+   - Message 单条信息记录
+   - User 用户信息，用于储存当前用户的信息
