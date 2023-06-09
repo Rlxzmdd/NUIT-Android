@@ -17,16 +17,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private ArrayList<User> mUsers = new ArrayList<>(); // 好友列表
     private SQLiteDao mDao; // 数据库操作对象
-    private User currentUser;//我一个特殊的friend
-    private void generateData() {
-        Log.d("asd",currentUser.toString());
+    private User currentUser;//当前用户
+    private void initData() {
         //更新 User 中的好友关系
-        currentUser
-                .setChats(
-                        mDao
-                                .queryChatListByUser(currentUser));
+        currentUser.setChats(mDao.queryChatListByUser(currentUser));
 //        mUsers.add(new User(1,"陈晓贤", R.drawable.cai, "你试试看通过那个找回密码吧"));
 //        mFriends.add(new Friend(2,"在佛山也要爬山", R.drawable.shujia, "我:什么时候去爬山"));
 //        mUsers.add(new User(3,"东软要你死 你活不到三更", R.drawable.neu, "大哥: 嗯嗯路上"));
@@ -48,14 +43,13 @@ public class MainActivity extends AppCompatActivity {
         currentUser = getIntent().getParcelableExtra("currentUser");
         mDao = new SQLiteDao(this);
 
-        generateData();
+        initData();
 
-        //线性布局
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRv.setLayoutManager(linearLayoutManager);
 
-        MessageListAdapter adapter = new MessageListAdapter(this,currentUser, currentUser.getChats());
+        MessageListAdapter adapter = new MessageListAdapter(this,currentUser);
         mRv.setAdapter(adapter);
     }
 }

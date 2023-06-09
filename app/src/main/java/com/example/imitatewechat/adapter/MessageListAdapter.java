@@ -24,13 +24,13 @@ import java.util.ArrayList;
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
     private Context mContext; // 上下文对象
     private User currentUser; // 当前用户
-    private ArrayList<ChatFriend> mUsers; // 有聊天记录的好友和群组列表
+    //private ArrayList<ChatFriend> mUsers; // 有聊天记录的好友和群组列表
     private SQLiteDao mDao; // 数据库操作对象
 
-    public MessageListAdapter(Context context, User me, ArrayList<ChatFriend> users) {
+    public MessageListAdapter(Context context, User me) {
         this.mContext = context;
         this.currentUser = me;
-        this.mUsers = users;
+        //this.mUsers = users;
         this.mDao = new SQLiteDao(context);
     }
 
@@ -45,14 +45,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // 为子项绑定数据
-        ChatFriend friend = mUsers.get(position); // 获取当前位置的用户对象
+        ChatFriend friend = currentUser.getChats().get(position); // 获取当前位置的用户对象
         holder.itemImg.setImageDrawable(Drawable.createFromPath(friend.getPic())); // 设置用户头像
         holder.itemTv.setText(friend.getName()); // 设置用户昵称
-        ArrayList<Message> messages = mDao.queryMessagesByUserId(currentUser, friend.getObjectId()); // 查询当前用户和该用户的聊天记录
-        if (!messages.isEmpty()) {
-            Message lastMessage = messages.get(messages.size() - 1); // 获取最后一条消息
-            holder.itemMsg.setText(lastMessage.getContent()); // 设置最后一条消息的内容
-        }
+//        ArrayList<Message> messages = mDao.queryMessagesByUserId(currentUser, friend.getObjectId()); // 查询当前用户和该用户的聊天记录
+//        if (!messages.isEmpty()) {
+//            Message lastMessage = messages.get(messages.size() - 1); // 获取最后一条消息
+            holder.itemMsg.setText(friend.getMsg()); // 设置最后一条消息的内容
+//        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +68,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public int getItemCount() {
         // 返回列表的长度
-        return mUsers.size();
+        return currentUser.getChats().size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -5,16 +5,16 @@ import java.util.Date;
 public class Message {
     private int mid; // 消息的id
     private String content; // 消息的内容
-    private User sender; // 消息的发送者
+    private int sender_uid; // 消息的发送者
     private boolean isGroup; // 消息的接收者是否是群组
     private int receiverId; // 消息的接收者的id，可能是用户或群组
     private boolean isWithdraw; // 消息是否撤回
     private Date time; // 消息的发送时间
 
-    public Message(int mid, String content, User sender, boolean isGroup, int receiverId, boolean isWithdraw, Date time) {
+    public Message(int mid, String content, int sender_uid, boolean isGroup, int receiverId, boolean isWithdraw, Date time) {
         this.mid = mid;
         this.content = content;
-        this.sender = sender;
+        this.sender_uid = sender_uid;
         this.isGroup = isGroup;
         this.receiverId = receiverId;
         this.isWithdraw = isWithdraw;
@@ -29,8 +29,8 @@ public class Message {
         return content;
     }
 
-    public User getSender() {
-        return sender;
+    public int getSenderUid() {
+        return sender_uid;
     }
 
     public boolean isGroup() {

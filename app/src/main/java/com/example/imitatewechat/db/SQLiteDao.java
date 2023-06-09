@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
+import com.example.imitatewechat.exception.UserNotFoundException;
 import com.example.imitatewechat.model.ChatFriend;
 import com.example.imitatewechat.model.Friend;
 import com.example.imitatewechat.model.Message;
@@ -124,9 +126,41 @@ public class SQLiteDao {
         return chatItems;
     }
 
+    public Friend queryFriendByUserId(int user_id) {
+        Cursor cursor = null;
+        Friend friend = null;
+        try {
+            // 获取SQLiteDatabase对象
+            SQLiteDatabase db = SqlHelper.getReadableDatabase();
+            // 使用一条SQL语句来查询聊天列表
+            String sql = "SELECT * FROM t_user WHERE uid = ?";
+            // 执行查询操作，返回Cursor对象
+            cursor = db.rawQuery(sql, new String[]{String.valueOf(user_id)});
+            if (cursor.moveToNext()) {
+                int uid = cursor.getInt(cursor.getColumnIndexOrThrow("uid"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+                String phone = cursor.getString(cursor.getColumnIndexOrThrow("phone"));
+                int age = cursor.getInt(cursor.getColumnIndexOrThrow("age"));
+                String pic = cursor.getString(cursor.getColumnIndexOrThrow("pic"));
+                friend = new Friend(-1,uid, name, phone, age, pic,"");
+            }
+            if(friend==null){
+                throw  new UserNotFoundException();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭Cursor对象
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return friend;
+    }
 
     // 一个方法来根据用户id和聊天对象id查询消息列表
-    public ArrayList<Message> queryMessagesByUserId(User user, int chat_id) {
+    public ArrayList<Message> queryMessagesByChaTo(User user, int chat_id) {
         ArrayList<Message> messages = new ArrayList<>();
         Cursor cursor = null;
         try {
@@ -143,7 +177,9 @@ public class SQLiteDao {
                 boolean is_group = cursor.getInt(cursor.getColumnIndexOrThrow("is_group")) == 1;
                 String content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
                 Date time_send = new Date(cursor.getLong(cursor.getColumnIndexOrThrow("time_send")));
-                messages.add(new Message(mid,content,user,is_group, receiver_id,false , time_send));
+                //Friend friend = queryFriendByUserId(sender_uid);
+                Message msg = new Message(mid,content,sender_uid,is_group, receiver_id,false , time_send);
+                messages.add(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -157,6 +193,7 @@ public class SQLiteDao {
     }
 
     public void insertMessage(Message message) {
+        // todo 目前无法插入信息
         Cursor cursor = null;
         try {
             // 获取SQLiteDatabase对象
@@ -164,7 +201,7 @@ public class SQLiteDao {
             PreparedStatement ps = null;
             // 使用一条SQL语句来查询聊天列表
             String sql = "INSERT INTO t_message (content, sender_uid, is_group, receiver_id, time_send) VALUES (?, ?, ?, ?, ?)";
-            cursor = db.rawQuery(sql, new String[]{String.valueOf(message.getContent()), String.valueOf(message.getSender().getUid()), String.valueOf(message.isGroup()), String.valueOf(message.getReceiverId()), String.valueOf(message.getTime().getTime())});
+            cursor = db.rawQuery(sql, new String[]{String.valueOf(message.getContent()), String.valueOf(message.getSenderUid()), String.valueOf(message.isGroup()), String.valueOf(message.getReceiverId()), String.valueOf(message.getTime().getTime())});
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -143,8 +143,8 @@ public class MySQLDao{
                 int receiver_id = rs.getInt("receiver_id");
                 boolean is_withdraw = rs.getBoolean("is_withdraw");
                 Date time_send = rs.getDate("time_send");
-                User sender = queryUserById(sender_uid); // 查询发送者的信息
-                Message message = new Message(mid, content, sender, is_group, receiver_id, is_withdraw, time_send);
+                //User sender = queryUserById(sender_uid); // 查询发送者的信息
+                Message message = new Message(mid, content, sender_uid, is_group, receiver_id, is_withdraw, time_send);
                 messages.add(message);
             }
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class MySQLDao{
             String sql = "INSERT INTO t_message (content, sender_uid, is_group, receiver_id, time_send) VALUES (?, ?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, message.getContent());
-            ps.setInt(2, message.getSender().getUid());
+            ps.setInt(2, message.getSenderUid());
             ps.setBoolean(3, message.isGroup());
             ps.setInt(4, message.getReceiverId());
             ps.setDate(5, new java.sql.Date(message.getTime().getTime()));
