@@ -5,13 +5,15 @@ import android.os.Parcelable;
 
 import com.example.imitatewechat.util.ChatType;
 
+import java.util.Date;
+
 public class Group extends ChatFriend implements Parcelable {
     private int creatorUid; // 群组的创建者的id
     private String userNickname; // 用户在群组中的别名
     private int gid;
 
-    public Group(int cid,int gid, String name,String pic,String msg, int creatorUid, String userNickname) {
-        super(ChatType.Group,gid,name,pic,msg);
+    public Group(int cid,int gid, String name,String pic,String msg, int creatorUid, String userNickname, Date time_send) {
+        super(ChatType.Group,gid,name,pic,msg,time_send);
         this.gid = gid;
         this.creatorUid = creatorUid;
         this.userNickname = userNickname;

@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.adapter.MessageListAdapter;
-import com.example.imitatewechat.adapter.UserListAdapter;
 import com.example.imitatewechat.db.SQLiteDao;
+import com.example.imitatewechat.model.ChatFriend;
+import com.example.imitatewechat.model.Friend;
 import com.example.imitatewechat.model.User;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SQLiteDao mDao; // 数据库操作对象
     private User currentUser;//当前用户
+    private MessageListAdapter adapter;
     private void initData() {
         //更新 User 中的好友关系
         currentUser.setChats(mDao.queryChatListByUser(currentUser));
@@ -49,7 +52,18 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRv.setLayoutManager(linearLayoutManager);
 
-        MessageListAdapter adapter = new MessageListAdapter(this,currentUser);
+        adapter = new MessageListAdapter(this,currentUser);
         mRv.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) { // 如果结果码是成功的
+            // 查看从那个聊天记录返回，并更新最新Friend中的msg
+            ChatFriend friend = currentUser.getChats().get(requestCode);
+            friend.setMsg(data.getStringExtra("message"));
+            adapter.notifyDataSetChanged();
+        }
     }
 }

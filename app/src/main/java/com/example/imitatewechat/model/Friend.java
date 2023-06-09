@@ -9,12 +9,14 @@ import com.example.imitatewechat.util.ChatType;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 public class Friend extends ChatFriend implements Parcelable {
     private final String phone; // 好友的手机号
     private final int age; // 好友的年龄
     private final int uid;
-    public Friend(int cid,int uid, String name, String phone, int age, String pic,String msg) {
-        super(ChatType.User,cid,name,pic,msg);
+    public Friend(int cid,int uid, String name, String phone, int age, String pic,String msg, Date time_send) {
+        super(ChatType.User,cid,name,pic,msg,time_send);
         this.uid = uid;
         this.phone = phone;
         this.age = age;

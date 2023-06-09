@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imitatewechat.R;
@@ -30,6 +33,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText mInputEt; // 输入框
     private Button mSendBtn; // 发送按钮
+    private TextView mChatTitle; // 聊天标题
+    private ImageButton mChatButton; // 回退按钮
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,8 @@ public class ChatActivity extends AppCompatActivity {
 
         mInputEt = findViewById(R.id.editTextMessageInput); // 获取输入框
         mSendBtn = findViewById(R.id.buttonSendMessage); // 获取发送按钮
+        mChatTitle = findViewById(R.id.chat_title);
+        mChatButton = findViewById(R.id.chat_return);
 
         RecyclerView mRv = findViewById(R.id.recyclerViewMessages); // 获取消息列表视图
 
@@ -54,24 +61,28 @@ public class ChatActivity extends AppCompatActivity {
         mAdapter = new MessageAdapter(this, mMessages, currentUser,chatTo); // 创建一个消息适配器，传入上下文、消息列表和当前用户信息
         mRv.setAdapter(mAdapter); // 为消息列表视图设置适配器
 
-        mSendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 点击发送按钮时，获取输入框的内容，并判断是否为空
-                String content = mInputEt.getText().toString();
-                if (!content.isEmpty()) {
-                    // 如果不为空，创建一个新的消息对象，设置其属性
-                    Message message = new Message(0, content, currentUser.getUid(), false, chatTo.getObjectId(), false, new Date());
-                    mDao.insertMessage(message); // 将新的消息插入到数据库中
-                    mMessages.add(message); // 将新的消息添加到消息列表中
-                    mAdapter.notifyItemInserted(mMessages.size() - 1); // 通知适配器有新的项目插入到最后一个位置
-                    mRv.scrollToPosition(mMessages.size() - 1); // 让消息列表视图滚动到最后一个位置
-                    mInputEt.setText(""); // 清空输入框的内容
-                }else{
-                    Toast toast = Toast.makeText(v.getContext(),"请输入信息",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+        mChatTitle.setText(chatTo.getName());
+        mSendBtn.setOnClickListener(v -> {
+            // 点击发送按钮时，获取输入框的内容，并判断是否为空
+            String content = mInputEt.getText().toString();
+            if (!content.isEmpty()) {
+                // 如果不为空，创建一个新的消息对象，设置其属性
+                Message message = new Message(0, content, currentUser.getUid(), false, chatTo.getObjectId(), false, new Date());
+                mDao.insertMessage(message); // 将新的消息插入到数据库中
+                mMessages.add(message); // 将新的消息添加到消息列表中
+                mAdapter.notifyItemInserted(mMessages.size() - 1); // 通知适配器有新的项目插入到最后一个位置
+                mRv.scrollToPosition(mMessages.size() - 1); // 让消息列表视图滚动到最后一个位置
+                mInputEt.setText(""); // 清空输入框的内容
+            }else{
+                Toast toast = Toast.makeText(v.getContext(),"请输入信息",Toast.LENGTH_SHORT);
+                toast.show();
             }
+        });
+        mChatButton.setOnClickListener(view -> {
+            Intent result = new Intent();
+            result.putExtra("message", mMessages.get(mMessages.size()-1).getContent());
+            setResult(RESULT_OK, result);
+            finish();
         });
     }
 

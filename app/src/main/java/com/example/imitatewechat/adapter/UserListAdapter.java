@@ -19,6 +19,7 @@ import android.content.Intent;
 
 import com.example.imitatewechat.activity.ChatActivity;
 
+@Deprecated
 // 一个类来表示一个适配器，用于在RecyclerView中显示好友
 public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
@@ -84,7 +85,6 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                            Integer.parseInt(mId.getText().toString()),
 //                            mName.getText().toString(),
 //                            mPic.getDrawable()
-//                            // todo 修复聊天对象图片显示
 //                    ));
                     intent.putExtra("me",mMe);
                     mContext.startActivity(intent);

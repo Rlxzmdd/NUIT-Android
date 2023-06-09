@@ -3,6 +3,7 @@ package com.example.imitatewechat.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.activity.ChatActivity;
+import com.example.imitatewechat.activity.MainActivity;
 import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.model.ChatFriend;
 import com.example.imitatewechat.model.Message;
@@ -22,12 +24,12 @@ import com.example.imitatewechat.model.User;
 import java.util.ArrayList;
 
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
-    private Context mContext; // 上下文对象
+    private MainActivity mContext; // 上下文对象
     private User currentUser; // 当前用户
     //private ArrayList<ChatFriend> mUsers; // 有聊天记录的好友和群组列表
     private SQLiteDao mDao; // 数据库操作对象
 
-    public MessageListAdapter(Context context, User me) {
+    public MessageListAdapter(MainActivity context, User me) {
         this.mContext = context;
         this.currentUser = me;
         //this.mUsers = users;
@@ -60,7 +62,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("currentUser", currentUser);
                 intent.putExtra("chatTo", friend);
-                mContext.startActivity(intent);
+                mContext.startActivityForResult(intent,friend.getChatId());
             }
         });
     }

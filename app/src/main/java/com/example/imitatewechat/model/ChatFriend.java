@@ -5,18 +5,22 @@ import android.os.Parcelable;
 
 import com.example.imitatewechat.util.ChatType;
 
+import java.util.Date;
+
 public abstract class ChatFriend implements Parcelable {
     private final Enum<ChatType> mType;
     private final int mId;
     private final String mName;
     private String mPic;
     private String mMsg;
-    public ChatFriend(Enum<ChatType> type,int id,String name,String pic,String msg){
+    private Date mDate;
+    public ChatFriend(Enum<ChatType> type, int id, String name, String pic, String msg, Date time_send){
         mType = type;
         mId = id;
         mName = name;
         mPic = pic;
         mMsg = msg;
+        mDate = time_send;
     }
 
     public Enum<ChatType> getType() {
@@ -86,4 +90,19 @@ public abstract class ChatFriend implements Parcelable {
         return 0;
     }
 
+    public Date getDate() {
+        return mDate;
+    }
+
+    public void setDate(Date mDate) {
+        this.mDate = mDate;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                "{" +
+                String.format("type=%s, index=%d, name=%s, pic=%s, msg=%s, date=%s", mType, mId, mName, mPic, mMsg, mDate) +
+                "}";
+    }
 }

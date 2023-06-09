@@ -1,5 +1,6 @@
 package com.example.imitatewechat.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -93,19 +94,40 @@ public class SQLiteDao {
     public ArrayList<ChatFriend> queryChatListByUser(User user) {
         ArrayList<ChatFriend> chatItems = new ArrayList<>();
         Cursor cursor = null;
+        int index = 0;
         try {
             // 获取SQLiteDatabase对象
             SQLiteDatabase db = SqlHelper.getReadableDatabase();
             // 使用一条SQL语句来查询聊天列表
-            String sql = "select (select count(*) from t_message as m2 where m2.time_send <= m.time_send and m2.is_group = false and m2.sender_uid = m.sender_uid) as id,\n" +
-                    "       m.sender_uid as uid, u.name, u.phone, u.age, u.pic, m.content, m.time_send\n" +
-                    "from t_message as m left join t_user as u\n" +
-                    "on m.is_group = false and u.uid = m.sender_uid\n" +
-                    "where m.receiver_id = ? and is_group = false;";
+            String sql = "select m.sender_uid as uid, u.name, u.phone, u.age, u.pic, m.content, m.time_send \n" +
+                    "from t_message as m \n" +
+                    "left join t_user as u on m.is_group = false and u.uid = m.sender_uid \n" +
+                    "where m.receiver_id = ? and is_group = false\n" +
+                    "group by m.sender_uid\n" +
+                    "having m.time_send = max(m.time_send)";
+            /*
+-- 查询作为发送者的最新信息
+select m.sender_uid as uid, u.name, u.phone, u.age, u.pic, m.content, m.time_send
+from t_message as m
+left join t_user as u on m.is_group = false and u.uid = m.sender_uid
+where m.sender_uid = ? and is_group = false
+group by m.receiver_id
+having m.time_send = max(m.time_send)
+-- 使用union子句来合并另一个查询
+union
+-- 查询作为接收者的最新信息
+select m.sender_uid as uid, u.name, u.phone, u.age, u.pic, m.content, m.time_send
+from t_message as m
+left join t_user as u on m.is_group = false and u.uid = m.sender_uid
+where m.receiver_id = ? and is_group = false
+group by m.sender_uid
+having m.time_send = max(m.time_send)
+             */
             // 执行查询操作，返回Cursor对象
             cursor = db.rawQuery(sql, new String[]{String.valueOf(user.getUid())});
             while (cursor.moveToNext()) {
-                int index = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                //int index = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                Log.d("index: ", String.valueOf(index));
                 int uid = cursor.getInt(cursor.getColumnIndexOrThrow("uid"));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
                 int age = cursor.getInt(cursor.getColumnIndexOrThrow("age"));
@@ -113,7 +135,8 @@ public class SQLiteDao {
                 String phone = cursor.getString(cursor.getColumnIndexOrThrow("phone")); // 获取电话
                 String content = cursor.getString(cursor.getColumnIndexOrThrow("content")); // 获取年龄
                 Date time_send = new Date(cursor.getLong(cursor.getColumnIndexOrThrow("time_send")));
-                chatItems.add(new Friend(index,uid, name,phone,age,pic,content));
+                chatItems.add(new Friend(index,uid, name,phone,age,pic,content,time_send));
+                index++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,7 +166,7 @@ public class SQLiteDao {
                 String phone = cursor.getString(cursor.getColumnIndexOrThrow("phone"));
                 int age = cursor.getInt(cursor.getColumnIndexOrThrow("age"));
                 String pic = cursor.getString(cursor.getColumnIndexOrThrow("pic"));
-                friend = new Friend(-1,uid, name, phone, age, pic,"");
+                friend = new Friend(-1,uid, name, phone, age, pic,"",new Date());
             }
             if(friend==null){
                 throw  new UserNotFoundException();
@@ -167,7 +190,8 @@ public class SQLiteDao {
             // 获取SQLiteDatabase对象
             SQLiteDatabase db = SqlHelper.getReadableDatabase();
             // 定义SQL语句
-            String sql = "SELECT * FROM t_message WHERE (sender_uid = ? AND receiver_id = ? AND is_group = false) OR (sender_uid = ? AND receiver_id = ? AND is_group = false) ORDER BY time_send ASC";
+            String sql = "SELECT * FROM t_message WHERE (sender_uid = ? AND receiver_id = ? AND is_group = false) OR (sender_uid = ? AND receiver_id = ? AND is_group = false) ORDER BY time_send DESC";
+            // todo 修复根据时间排序问题。目前排序有点奇怪。
             // 执行查询操作，返回Cursor对象
             cursor = db.rawQuery(sql, new String[]{String.valueOf(user.getUid()), String.valueOf(chat_id), String.valueOf(chat_id), String.valueOf(user.getUid())});
             while (cursor.moveToNext()) {
@@ -191,25 +215,28 @@ public class SQLiteDao {
         }
         return messages;
     }
-
     public void insertMessage(Message message) {
-        // todo 目前无法插入信息
-        Cursor cursor = null;
         try {
             // 获取SQLiteDatabase对象
-            SQLiteDatabase db = SqlHelper.getReadableDatabase();
-            PreparedStatement ps = null;
-            // 使用一条SQL语句来查询聊天列表
-            String sql = "INSERT INTO t_message (content, sender_uid, is_group, receiver_id, time_send) VALUES (?, ?, ?, ?, ?)";
-            cursor = db.rawQuery(sql, new String[]{String.valueOf(message.getContent()), String.valueOf(message.getSenderUid()), String.valueOf(message.isGroup()), String.valueOf(message.getReceiverId()), String.valueOf(message.getTime().getTime())});
-
+            SQLiteDatabase db = SqlHelper.getWritableDatabase();
+            // 创建一个ContentValues对象，用于存储消息的属性和值
+            ContentValues values = new ContentValues();
+            values.put("content", message.getContent());
+            values.put("sender_uid", message.getSenderUid());
+            values.put("is_group", message.isGroup());
+            values.put("receiver_id", message.getReceiverId());
+            values.put("time_send", message.getTime().getTime());
+            // 使用insert方法向t_message表中插入一条数据，返回插入的行号
+            long rowId = db.insert("t_message", null, values);
+            if (rowId != -1) {
+                // 插入成功，打印日志
+                Log.d("Database", "Insert message successfully, rowId = " + rowId);
+            } else {
+                // 插入失败，打印日志
+                Log.e("Database", "Insert message failed");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            // 关闭Cursor对象
-            if (cursor != null) {
-                cursor.close();
-            }
         }
     }
 

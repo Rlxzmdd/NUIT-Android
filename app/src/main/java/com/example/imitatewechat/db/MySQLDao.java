@@ -109,7 +109,7 @@ public class MySQLDao{
                 String phone = rs.getString("phone"); // 获取电话
                 String content = rs.getString("content"); // 获取年龄
                 Date time_send = rs.getDate("time_send");
-                chatItems.add(new Friend(index,uid, name,phone,age,pic,content));
+                chatItems.add(new Friend(index,uid, name,phone,age,pic,content,time_send));
             }
         } catch (Exception e) {
             e.printStackTrace();

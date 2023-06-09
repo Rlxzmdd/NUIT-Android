@@ -38,7 +38,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         currentUser = me;
         this.chatTo = chatTo;
     }
-
     // 一个方法来为RecyclerView中的每个项目创建一个视图持有者
     @NonNull
     @Override
@@ -62,8 +61,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         // 获取给定位置的消息对象
         Message message = mMessages.get(position);
         // 格式化消息时间
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
         String time = sdf.format(message.getTime());
+        Log.d("chat-time",time+"->"+message.getContent());
         // 获取消息发送者
         //User sender = message.getSender ();
         // 判断视图持有者的类型并设置文本和图片
