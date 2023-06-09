@@ -1,15 +1,12 @@
-package com.example.imitatewechat.model;
+package com.example.imitatewechat.entity;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class User implements Parcelable{
+public class User implements Parcelable {
     private int uid; // 用户的id
     private String name; // 用户的名字
     private String password; // 用户的密码

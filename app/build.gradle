@@ -35,6 +35,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation files('libs/mysql-connector-j-8.0.32.jar')
+    implementation files('libs/fastjson-1.2.83.jar')
+    implementation files('libs/pinyin4j-2.5.0.jar')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

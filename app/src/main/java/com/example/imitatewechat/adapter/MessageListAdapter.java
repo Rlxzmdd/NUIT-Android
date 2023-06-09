@@ -1,9 +1,7 @@
 package com.example.imitatewechat.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +15,10 @@ import com.example.imitatewechat.R;
 import com.example.imitatewechat.activity.ChatActivity;
 import com.example.imitatewechat.activity.MainActivity;
 import com.example.imitatewechat.db.SQLiteDao;
-import com.example.imitatewechat.model.ChatFriend;
-import com.example.imitatewechat.model.Message;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.ChatFriend;
+import com.example.imitatewechat.entity.User;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
     private MainActivity mContext; // 上下文对象
@@ -55,6 +52,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 //            Message lastMessage = messages.get(messages.size() - 1); // 获取最后一条消息
             holder.itemMsg.setText(friend.getMsg()); // 设置最后一条消息的内容
 //        }
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+        holder.itemTime.setText(sdf.format(friend.getDate()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +77,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         ImageView itemImg;
         TextView itemTv;
         TextView itemMsg;
+        TextView itemTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +85,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             itemImg = itemView.findViewById(R.id.item_img);
             itemTv = itemView.findViewById(R.id.item_tv);
             itemMsg = itemView.findViewById(R.id.item_msg);
+            itemTime =  itemView.findViewById(R.id.item_time);
         }
     }
 }

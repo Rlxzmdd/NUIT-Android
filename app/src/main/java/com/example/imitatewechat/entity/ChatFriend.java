@@ -1,4 +1,4 @@
-package com.example.imitatewechat.model;
+package com.example.imitatewechat.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

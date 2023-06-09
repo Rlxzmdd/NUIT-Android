@@ -5,15 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.imitatewechat.util.DataUtils;
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.model.User;
 
 // LoginActivity已被抛弃，部份功能由LoadingActivity取代
 @Deprecated

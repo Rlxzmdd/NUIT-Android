@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_parent"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_list_item_click"
+        android:clickable="false">
+
+        <RelativeLayout
+            android:id="@+id/rl_avatar"
+            android:layout_width="72dp"
+            android:layout_height="64dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/sdv_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/default_user_avatar"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/rl_avatar"
+            android:text="爱久见人心"
+            android:textColor="#353535"
+            android:textSize="@dimen/common_item_text_size" />
+
+        <TextView
+            android:id="@+id/tv_create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="12dp"
+            android:text="昨天"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@id/rl_avatar"
+            android:orientation="horizontal"
+            android:paddingRight="30dp">
+
+            <ImageView
+                android:id="@+id/msg_state"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/msg_state_fail_resend"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_last_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="三点几了,做撚啊做,饮茶先啦"
+                android:textColor="#AAAAAA"
+                android:textSize="@dimen/conversation_msg_text_size" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_unread"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignTop="@id/rl_avatar"
+            android:layout_alignRight="@id/rl_avatar"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="7dp"
+            android:background="@mipmap/bg_unread_count"
+            android:gravity="center"
+            android:text="7"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#dadada" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Imitate WeChat</string>
+
+    <string name="tab_chats">微信</string>
+    <string name="tab_contacts">通讯录</string>
+    <string name="tab_discover">发现</string>
+    <string name="tab_me">我</string>
+
+    <string name="saving">正在保存</string>
+    <string name="wx_id_or_phone">微信号/手机号</string>
+    <string name="new_friends">新的朋友</string>
+    <string name="add_friends">添加朋友</string>
+    <string name="add_phone_num">添加电话号码</string>
+
+    <string name="chat_info">聊天信息</string>
+    <string name="set_chat_to_top">置顶聊天</string>
+    <string name="block_chat_msg">免打扰</string>
+    <string name="clear_chat_msg">清空聊天记录</string>
+
+    <string name="connect_to_server_error">不能连接到服务器</string>
 </resources>

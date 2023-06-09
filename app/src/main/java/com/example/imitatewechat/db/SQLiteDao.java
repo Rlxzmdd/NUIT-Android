@@ -4,17 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.example.imitatewechat.exception.UserNotFoundException;
-import com.example.imitatewechat.model.ChatFriend;
-import com.example.imitatewechat.model.Friend;
-import com.example.imitatewechat.model.Message;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.ChatFriend;
+import com.example.imitatewechat.entity.Friend;
+import com.example.imitatewechat.entity.Message;
+import com.example.imitatewechat.entity.User;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -90,6 +87,36 @@ public class SQLiteDao {
             }
         }
         return user;
+    }
+    public ArrayList<Friend> queryAllFriendsByUser(User user){
+        ArrayList<Friend> friends = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            // 获取SQLiteDatabase对象
+            SQLiteDatabase db = SqlHelper.getReadableDatabase();
+            // 定义SQL语句
+            String sql = "select * from t_user where uid in (SELECT friend_uid FROM t_friend WHERE user_uid = ?)";
+            // 执行查询操作，返回Cursor对象
+            cursor = db.rawQuery(sql, new String[]{String.valueOf(user.getUid())});
+            int index = 0;
+            while (cursor.moveToNext()) {
+                int uid = cursor.getInt(cursor.getColumnIndexOrThrow("uid"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                String phone = cursor.getString(cursor.getColumnIndexOrThrow("phone"));
+                String pic = cursor.getString(cursor.getColumnIndexOrThrow("pic")); // 获取头像
+                int age = cursor.getInt(cursor.getColumnIndexOrThrow("age"));
+                friends.add(new Friend(index++,uid, name, phone, age, pic, "",new Date()));
+                Log.d("ad",name);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭Cursor对象
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return friends;
     }
     public ArrayList<ChatFriend> queryChatListByUser(User user) {
         ArrayList<ChatFriend> chatItems = new ArrayList<>();

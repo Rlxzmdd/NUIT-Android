@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imitatewechat.db.SQLiteDao;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.User;
 import com.example.imitatewechat.util.DataUtils;
 import com.example.imitatewechat.R;
 

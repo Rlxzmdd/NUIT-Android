@@ -7,12 +7,36 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="grid_state_focused">#80000000</color>
     <color name="disable">#b4b4b4</color>
+    <color name="black_deep">#FF000000</color>
+
+
+    <color name="navy_blue">#506484</color>
+    <color name="wechat_btn_green">#07C063</color>
+    <color name="wechat_chat_bg">#95EA6B</color>
+    <color name="cursor_chat_et">#07C063</color>
 
     <!-- 定义状态栏颜色 -->
     <color name="status_bar_color">#FAFAFA</color>
     <!-- 定义手势条颜色 -->
     <color name="navigation_bar_color">#FAFAFA</color>
+
+    <color name="app_common_bg">#EDEDED</color>
+    <color name="moments_common_bg">#EEEEEE</color>
+    <color name="main_tab_bg">#F7F7F7</color>
+    <color name="common_top_bar">#EDEDED</color>
+    <color name="common_top_title">#353535</color>
+    <color name="common_top_bar_grey">#ebebeb</color>
+    <color name="common_top_bar_white">#FFFFFF</color>
+    <color name="common_top_bar_blue">#22292c</color>
+    <color name="common_item_black">#353535</color>
+    <color name="common_item_grey">#999999</color>
+    <color name="common_bg">#fcfcfc</color>
+    <color name="divider_list">#cccccc</color>
+    <color name="color_light_grey">#f0f0f0</color>
+    <color name="error_item_color">#F6EBE6</color>
 </resources>
 
 

@@ -2,26 +2,17 @@ package com.example.imitatewechat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.imitatewechat.activity.MainActivity;
 import com.example.imitatewechat.activity.PhoneNumberLoginActivity;
 import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.exception.UserNotFoundException;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.User;
 import com.example.imitatewechat.util.DataUtils;
-
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class LoadingActivity extends AppCompatActivity {
 

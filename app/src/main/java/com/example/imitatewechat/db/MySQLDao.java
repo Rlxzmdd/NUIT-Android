@@ -3,15 +3,13 @@ package com.example.imitatewechat.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.example.imitatewechat.model.ChatFriend;
-import com.example.imitatewechat.model.Friend;
-import com.example.imitatewechat.model.Group;
-import com.example.imitatewechat.model.User;
-import com.example.imitatewechat.model.Message;
+import com.example.imitatewechat.entity.ChatFriend;
+import com.example.imitatewechat.entity.Friend;
+import com.example.imitatewechat.entity.User;
+import com.example.imitatewechat.entity.Message;
 
 /**
  * Tips：Dao类封装了一系列数据库操作，比如插入条目，搜索条目等等

@@ -1,4 +1,4 @@
-package com.example.imitatewechat.model;
+package com.example.imitatewechat.entity;
 
 import java.util.Date;
 

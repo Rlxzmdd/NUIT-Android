@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 
 import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.exception.UserNotFoundException;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.User;
 
 public class DataUtils {
     private final Context context;

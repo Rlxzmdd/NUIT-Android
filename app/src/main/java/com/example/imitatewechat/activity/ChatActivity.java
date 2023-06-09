@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,9 +15,9 @@ import android.widget.Toast;
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.adapter.MessageAdapter;
 import com.example.imitatewechat.db.SQLiteDao;
-import com.example.imitatewechat.model.ChatFriend;
-import com.example.imitatewechat.model.Message;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.ChatFriend;
+import com.example.imitatewechat.entity.Message;
+import com.example.imitatewechat.entity.User;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_new_friends"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/contacts_layout_height"
+        android:background="@drawable/bg_list_item_click"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/sdv_new_friends"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:src="@mipmap/icon_contacts_new_friends"/>
+
+        <TextView
+            android:id="@+id/tv_new_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/sdv_new_friends"
+            android:text="@string/new_friends"
+            android:textColor="#353535"
+            android:textSize="@dimen/contacts_text_size" />
+
+        <TextView
+            android:id="@+id/tv_new_friends_unread"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@mipmap/bg_unread_count"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.1dp"-->
+<!--        android:layout_marginLeft="60dp"-->
+<!--        android:background="#d9d9d9" />-->
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rl_group_chats"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/contacts_layout_height"-->
+<!--        android:background="@drawable/bg_list_item_click"-->
+<!--        android:clickable="true">-->
+
+<!--        <com.facebook.drawee.view.SimpleDraweeView-->
+<!--            android:id="@+id/sdv_group_chats"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            fresco:actualImageScaleType="centerCrop"-->
+<!--            fresco:placeholderImage="@mipmap/icon_contacts_group_chats"-->
+<!--            fresco:placeholderImageScaleType="centerCrop"-->
+<!--            fresco:roundedCornerRadius="5dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_group_chats"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            android:layout_toRightOf="@id/sdv_group_chats"-->
+<!--            android:text="@string/group_chats"-->
+<!--            android:textColor="#353535"-->
+<!--            android:textSize="@dimen/contacts_text_size" />-->
+<!--    </RelativeLayout>-->
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.1dp"-->
+<!--        android:layout_marginLeft="60dp"-->
+<!--        android:background="#d9d9d9" />-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/contacts_layout_height"-->
+<!--        android:background="@drawable/bg_list_item_click"-->
+<!--        android:clickable="true">-->
+
+<!--        <com.facebook.drawee.view.SimpleDraweeView-->
+<!--            android:id="@+id/sdv_tags"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            fresco:actualImageScaleType="centerCrop"-->
+<!--            fresco:placeholderImage="@mipmap/icon_contacts_tags"-->
+<!--            fresco:placeholderImageScaleType="centerCrop"-->
+<!--            fresco:roundedCornerRadius="5dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_tags"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            android:layout_toRightOf="@id/sdv_tags"-->
+<!--            android:text="@string/tag"-->
+<!--            android:textColor="#353535"-->
+<!--            android:textSize="@dimen/contacts_text_size" />-->
+<!--    </RelativeLayout>-->
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0.1dp"-->
+<!--        android:layout_marginLeft="60dp"-->
+<!--        android:background="@color/common_divider_grey" />-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/contacts_layout_height"-->
+<!--        android:background="@drawable/bg_list_item_click"-->
+<!--        android:clickable="true">-->
+
+<!--        <com.facebook.drawee.view.SimpleDraweeView-->
+<!--            android:id="@+id/sdv_contacts_official_accounts"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            fresco:actualImageScaleType="centerCrop"-->
+<!--            fresco:placeholderImage="@mipmap/icon_contacts_official_accounts"-->
+<!--            fresco:placeholderImageScaleType="centerCrop"-->
+<!--            fresco:roundedCornerRadius="5dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_contacts_official_accounts"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            android:layout_toRightOf="@id/sdv_contacts_official_accounts"-->
+<!--            android:text="@string/official_accounts"-->
+<!--            android:textColor="#353535"-->
+<!--            android:textSize="@dimen/contacts_text_size" />-->
+<!--    </RelativeLayout>-->
+
+</LinearLayout>

@@ -13,10 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.model.ChatFriend;
-import com.example.imitatewechat.model.Friend;
-import com.example.imitatewechat.model.Message;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.ChatFriend;
+import com.example.imitatewechat.entity.Message;
+import com.example.imitatewechat.entity.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

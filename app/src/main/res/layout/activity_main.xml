@@ -1,116 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.MainActivity">
-    <RelativeLayout
+    android:background="#ffffff"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/ll_main_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ededed"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <!--header-->
-        <TextView
-            android:id="@+id/TextView_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="微信(10)"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-        <!--加号按钮-->
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="4dp"
-            android:src="@drawable/add_svg_icon2929" />
-        <!--搜素框-->
-        <Button
-            android:id="@+id/Button_search"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="33dp"
-            android:layout_below="@id/TextView_title"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="7dp"
-            android:background="@drawable/search_button"
-            android:text="搜索"
-            android:textColor="#b4b4b4"
-            android:textSize="17sp" />
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/main_tab_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <RelativeLayout
+            android:id="@+id/rl_chats"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
 
-        <LinearLayout
-            android:id="@+id/computer_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Button_search"
-            android:orientation="vertical">
-            <!--添加横线-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E3E3E3" />
-            <!--mac状态-->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/iv_chats"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_chats" />
+
+            <TextView
+                android:id="@+id/tv_chats"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="23dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:layout_below="@id/iv_chats"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_chats"
+                android:textColor="#353535"
+                android:textSize="11sp" />
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/mac" />
+<!--            <TextView-->
+<!--                android:id="@+id/unread_msg_number"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="14dp"-->
+<!--                android:background="@mipmap/bg_unread_count"-->
+<!--                android:gravity="center"-->
+<!--                android:text="0"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:textSize="12sp" />-->
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="23dp"
-                    android:text="Mac 微信已登录"
-                    android:textColor="#505052" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E3E3E3" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/rl_contacts"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/blank_layout"
-            android:orientation="horizontal"/>
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/message_list"
-            android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/iv_contacts"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_contacts" />
+
+            <TextView
+                android:id="@+id/tv_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_contacts"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_contacts"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/unread_address_number"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="14dp"-->
+<!--                android:background="@mipmap/bg_unread_count"-->
+<!--                android:gravity="center"-->
+<!--                android:text="0"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:textSize="11sp" />-->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_discover"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
-            android:layout_below="@id/computer_status"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/blank_layout"
-            android:layout_marginBottom="-9dp"
-            android:src="@drawable/bottom_nav" />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_discover"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_discover" />
 
+            <TextView
+                android:id="@+id/tv_discover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_discover"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_discover"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+        </RelativeLayout>
 
-</LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rl_me"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onTabClicked"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_me"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_tab_me" />
+
+            <TextView
+                android:id="@+id/tv_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_me"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/tab_me"
+                android:textColor="#353535"
+                android:textSize="11sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_temp"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_above="@id/ll_main_button"
+        android:background="#d6d6d6" />
+
+    <RelativeLayout
+        android:id="@+id/rl_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/view_temp"
+        android:layout_below="@id/rl_title" />
+
+</RelativeLayout>

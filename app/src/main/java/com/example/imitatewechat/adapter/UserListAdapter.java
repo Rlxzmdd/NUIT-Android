@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.model.User;
+import com.example.imitatewechat.entity.User;
 
 import java.util.ArrayList;
 

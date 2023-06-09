@@ -1,13 +1,9 @@
-package com.example.imitatewechat.model;
+package com.example.imitatewechat.entity;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.imitatewechat.util.ChatType;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.util.Date;
 
