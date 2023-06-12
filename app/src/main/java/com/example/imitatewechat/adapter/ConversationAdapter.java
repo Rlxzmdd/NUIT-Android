@@ -69,7 +69,6 @@ public class ConversationAdapter extends BaseAdapter {
             TextView mNickNameTv = convertView.findViewById(R.id.tv_nick_name);
             TextView mLastMsgTv = convertView.findViewById(R.id.tv_last_msg);
             ImageView mAvatarSdv = convertView.findViewById(R.id.sdv_avatar);
-            TextView mUnreadTv = convertView.findViewById(R.id.tv_unread);
             TextView mCreateTimeTv = convertView.findViewById(R.id.tv_create_time);
 
             //UserInfo userInfo = (UserInfo) conversation.getTargetInfo();

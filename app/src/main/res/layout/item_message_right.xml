@@ -56,7 +56,8 @@
         android:id="@+id/message_right_avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:src="@mipmap/default_user_avatar"/>
     <!--        android:src="@drawable/avatar_right"-->
 
 </LinearLayout>

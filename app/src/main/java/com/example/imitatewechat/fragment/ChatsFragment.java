@@ -3,6 +3,7 @@ package com.example.imitatewechat.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class ChatsFragment extends BaseFragment {
 
     ListView mConversationLv;
 
-    ConversationAdapter mConversationAdapter;
+    public ConversationAdapter mConversationAdapter;
 
 
     private static final int REFRESH_CONVERSATION_LIST = 0x3000;
@@ -66,7 +67,8 @@ public class ChatsFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
                 intent.putExtra("currentUser", currentUser);
                 intent.putExtra("chatTo", friend);
-                startActivityForResult(intent,friend.getChatId());
+                Log.d("chatto",getActivity().getLocalClassName());
+                getActivity().startActivityForResult(intent,friend.getChatId());
 
             }
         });

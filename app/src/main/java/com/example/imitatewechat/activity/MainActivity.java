@@ -13,11 +13,14 @@ import android.widget.TextView;
 import com.example.imitatewechat.R;
 import com.example.imitatewechat.adapter.MessageListAdapter;
 import com.example.imitatewechat.db.SQLiteDao;
+import com.example.imitatewechat.entity.Friend;
 import com.example.imitatewechat.fragment.ChatsFragment;
 import com.example.imitatewechat.fragment.ContactsFragment;
 import com.example.imitatewechat.entity.ChatFriend;
 import com.example.imitatewechat.entity.User;
 import com.example.imitatewechat.util.PreferencesUtil;
+
+import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
 
@@ -29,7 +32,7 @@ public class MainActivity extends BaseActivity {
     private TextView[] mMainButtonTvs;
     private SQLiteDao mDao; // 数据库操作对象
     private User currentUser;//当前用户
-    private MessageListAdapter adapter;
+//    private MessageListAdapter adapter;
     private int mIndex;
     private int mCurrentTabIndex;
     public void initData() {
@@ -90,10 +93,14 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) { // 如果结果码是成功的
+            Log.d("chat_code", String.valueOf(requestCode));
             // 查看从那个聊天记录返回，并更新最新Friend中的msg
-            ChatFriend friend = currentUser.getChats().get(requestCode);
-            friend.setMsg(data.getStringExtra("message"));
-            adapter.notifyDataSetChanged();
+            ArrayList<ChatFriend> fs = currentUser.getChats();
+            ChatFriend f = fs.get(requestCode);
+            f.setMsg(data.getStringExtra("message"));
+            fs.set(requestCode,f);
+            mChatsFragment.mConversationAdapter.setData(fs);
+            mChatsFragment.mConversationAdapter.notifyDataSetChanged();
         }
     }
 

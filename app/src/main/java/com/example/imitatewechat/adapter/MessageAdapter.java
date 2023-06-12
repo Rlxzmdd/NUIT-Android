@@ -70,13 +70,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             LeftHolder leftHolder = (LeftHolder) holder; // 强制类型转换
             leftHolder.contentTv.setText(message.getContent());
             leftHolder.timeTv.setText(time);
-            leftHolder.picImv.setImageDrawable(Drawable.createFromPath(chatTo.getPic()));
+//            leftHolder.picImv.setImageDrawable(Drawable.createFromPath(chatTo.getPic()));
             leftHolder.nameTv.setText(chatTo.getName());
         } else { // 如果是右边视图持有者
             RightHolder rightHolder = (RightHolder) holder; // 强制类型转换
             rightHolder.contentTv.setText(message.getContent());
             rightHolder.timeTv.setText(time);
-            rightHolder.picImv.setImageDrawable(Drawable.createFromPath(currentUser.getPic()));
+//            rightHolder.picImv.setImageDrawable(Drawable.createFromPath(currentUser.getPic()));
             rightHolder.nameTv.setText(currentUser.getName());
         }
     }

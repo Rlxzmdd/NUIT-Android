@@ -1,6 +1,5 @@
 package com.example.imitatewechat.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +10,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.MessageFormat;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.imitatewechat.R;
-import com.example.imitatewechat.adapter.FriendsAdapter;
+import com.example.imitatewechat.adapter.FriendsListAdapter;
 import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.entity.Friend;
 import com.example.imitatewechat.entity.User;
+import com.example.imitatewechat.util.PreferencesUtil;
 
 /**
  * 通讯录
@@ -30,7 +29,7 @@ import com.example.imitatewechat.entity.User;
  */
 public class ContactsFragment extends BaseFragment {
 
-    FriendsAdapter mFriendsAdapter;
+    FriendsListAdapter mFriendsListAdapter;
 
     TextView mTitleTv;
 
@@ -69,6 +68,12 @@ public class ContactsFragment extends BaseFragment {
 //        mUser = PreferencesUtil.getInstance().getUser();
 
         mDao = new SQLiteDao(getActivity());
+        currentUser = mDao.queryUserById(PreferencesUtil.getInstance().getUserID());
+        currentUser.setChats(mDao.queryChatListByUser(currentUser));
+//        mFriendList = currentUser.getChats();
+        mFriendList = mDao.queryAllFriendsByUser(currentUser);
+
+
         setTitleStrokeWidth(mTitleTv);
 
         mInflater = LayoutInflater.from(getActivity());
@@ -92,15 +97,14 @@ public class ContactsFragment extends BaseFragment {
 
         mNewFriendsUnreadNumTv = headerView.findViewById(R.id.tv_new_friends_unread);
 
-        mFriendList = mDao.queryAllFriendsByUser(currentUser);
         // 对list进行排序
 //        Collections.sort(mFriendList, new PinyinComparator() {
 //        });
 
 //        mStarFriendList.addAll(mFriendList);
 
-        mFriendsAdapter = new FriendsAdapter(getActivity(), R.layout.item_contacts, mFriendList);
-        mFriendsLv.setAdapter(mFriendsAdapter);
+        mFriendsListAdapter = new FriendsListAdapter(getActivity(), R.layout.item_contacts, mFriendList);
+        mFriendsLv.setAdapter(mFriendsListAdapter);
 
         mFriendsCountTv.setText(MessageFormat.format("{0}位联系人", mFriendList.size()));
 
@@ -138,8 +142,8 @@ public class ContactsFragment extends BaseFragment {
 //        Collections.sort(mFriendList, new PinyinComparator() {
 //        });
 //        mStarFriendList.addAll(mFriendList);
-        mFriendsAdapter.setData(mFriendList);
-        mFriendsAdapter.notifyDataSetChanged();
+        mFriendsListAdapter.setData(mFriendList);
+        mFriendsListAdapter.notifyDataSetChanged();
         mFriendsCountTv.setText(MessageFormat.format("{0}位联系人", mFriendList.size()));
     }
 

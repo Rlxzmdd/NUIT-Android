@@ -157,11 +157,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO t_user (uid, name, password, phone, age, pic) VALUES (5, 'David', '1234', '12345678905', 23, 'R.drawable.david');");
 
 // 插入好友数据
+        // 双向关系
         db.execSQL("INSERT INTO t_friend (fid, user_uid ,friend_uid ,time_add) VALUES (1 ,1 ,2 ,'2021-12-20 10:00:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (2 ,1 ,3 ,'2021-12-20 10:10:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (3 ,2 ,3 ,'2021-12-20 10:20:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (4 ,2 ,4 ,'2021-12-20 10:30:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (5 ,3 ,5 ,'2021-12-20 10:40:00');");
+        db.execSQL("INSERT INTO t_friend (fid, user_uid ,friend_uid ,time_add) VALUES (2 ,2 ,1 ,'2021-12-20 10:00:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (3 ,1 ,3 ,'2021-12-20 10:10:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (4 ,3 ,1 ,'2021-12-20 10:10:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (5 ,2 ,3 ,'2021-12-20 10:20:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (6 ,3 ,2 ,'2021-12-20 10:20:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (7 ,2 ,4 ,'2021-12-20 10:30:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (8 ,4 ,2 ,'2021-12-20 10:30:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (9 ,3 ,5 ,'2021-12-20 10:40:00');");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (10 ,5 ,3 ,'2021-12-20 10:40:00');");
 
 // 插入群组数据
         db.execSQL("INSERT INTO t_group (gid ,name ,creator_uid ,time_create) VALUES (1 ,'2023讨论群' ,1 ,'2021-12-20 11:00:00');");

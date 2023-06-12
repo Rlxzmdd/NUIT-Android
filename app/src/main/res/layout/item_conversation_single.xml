@@ -23,7 +23,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/default_user_avatar"/>
+                android:src="@mipmap/default_user_avatar" />
         </RelativeLayout>
 
         <TextView
@@ -73,19 +73,19 @@
                 android:textSize="@dimen/conversation_msg_text_size" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_unread"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignTop="@id/rl_avatar"
-            android:layout_alignRight="@id/rl_avatar"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="7dp"
-            android:background="@mipmap/bg_unread_count"
-            android:gravity="center"
-            android:text="7"
-            android:textColor="#ffffff"
-            android:textSize="12sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_unread"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_alignTop="@id/rl_avatar"-->
+<!--            android:layout_alignRight="@id/rl_avatar"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_marginRight="7dp"-->
+<!--            android:background="@mipmap/bg_unread_count"-->
+<!--            android:gravity="center"-->
+<!--            android:text="7"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:textSize="12sp" />-->
 
         <View
             android:layout_width="match_parent"

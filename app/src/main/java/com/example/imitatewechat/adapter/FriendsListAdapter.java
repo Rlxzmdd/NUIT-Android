@@ -1,8 +1,6 @@
 package com.example.imitatewechat.adapter;
 
 import android.content.Context;
-import android.net.Uri;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +21,13 @@ import androidx.annotation.Nullable;
  *
  * @author zhou
  */
-public class FriendsAdapter extends ArrayAdapter<Friend> {
+public class FriendsListAdapter extends ArrayAdapter<Friend> {
 
     List<Friend> mFriendList;
     int mResource;
     private LayoutInflater mLayoutInflater;
 
-    public FriendsAdapter(Context context, int resource, List<Friend> friendList) {
+    public FriendsListAdapter(Context context, int resource, List<Friend> friendList) {
         super(context, resource, friendList);
         this.mResource = resource;
         this.mFriendList = friendList;

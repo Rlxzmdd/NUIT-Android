@@ -20,6 +20,7 @@ import com.example.imitatewechat.entity.User;
 
 import java.text.SimpleDateFormat;
 
+@Deprecated
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder> {
     private MainActivity mContext; // 上下文对象
     private User currentUser; // 当前用户

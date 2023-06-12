@@ -106,7 +106,7 @@ public class SQLiteDao {
                 String pic = cursor.getString(cursor.getColumnIndexOrThrow("pic")); // 获取头像
                 int age = cursor.getInt(cursor.getColumnIndexOrThrow("age"));
                 friends.add(new Friend(index++,uid, name, phone, age, pic, "",new Date()));
-                Log.d("ad",name);
+                Log.d("friend-list",name);
             }
         } catch (Exception e) {
             e.printStackTrace();
