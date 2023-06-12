@@ -19,6 +19,8 @@ import com.example.imitatewechat.entity.ChatFriend;
 import com.example.imitatewechat.entity.Message;
 import com.example.imitatewechat.entity.User;
 import com.example.imitatewechat.util.PreferencesUtil;
+import com.example.imitatewechat.widget.EditDialog;
+import com.example.imitatewechat.widget.NoTitleAlertDialog;
 
 import java.sql.SQLData;
 import java.util.ArrayList;
@@ -43,6 +45,36 @@ public class ChatsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_conversation, container, false);
         this.mTitleTv = view.findViewById(R.id.tv_title);
         this.mConversationLv = view.findViewById(R.id.lv_conversation);
+        view.findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 EditDialog mEditDialog = new EditDialog(getActivity(), "添加好友",
+                        "", "输入要想添加的好友id",
+                        "添加", "取消");
+                mEditDialog.setOnDialogClickListener(new EditDialog.OnDialogClickListener() {
+                    @Override
+                    public void onOkClick() {
+                        mEditDialog.dismiss();
+                        String user_id = mEditDialog.getContent();
+                        boolean status = mDao.addFriendByUserId(currentUser, Integer.parseInt(user_id));
+                        Log.d("add_userid",user_id+","+status);
+                        if(status){
+                            (new NoTitleAlertDialog(getActivity(),"成功添加好友","确认")).show();
+                            refreshConversationList();
+                        }else{
+                            (new NoTitleAlertDialog(getActivity(),"添加好友失败，请确认好友id","确认")).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelClick() {
+                        mEditDialog.dismiss();
+                    }
+                });
+
+                mEditDialog.show();
+            }
+        });
         return view;
     }
 
@@ -74,9 +106,11 @@ public class ChatsFragment extends BaseFragment {
         });
     }
 
-//    public void refreshConversationList() {
-//        mHandler.sendMessage(mHandler.obtainMessage(REFRESH_CONVERSATION_LIST));
-//    }
+    public void refreshConversationList() {
+        currentUser.setChats(mDao.queryChatListByUser(currentUser));
+        mConversationAdapter.setData(currentUser.getChats());
+        mConversationAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onDestroy() {

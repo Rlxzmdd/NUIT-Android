@@ -158,37 +158,37 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 // 插入好友数据
         // 双向关系
-        db.execSQL("INSERT INTO t_friend (fid, user_uid ,friend_uid ,time_add) VALUES (1 ,1 ,2 ,'2021-12-20 10:00:00');");
-        db.execSQL("INSERT INTO t_friend (fid, user_uid ,friend_uid ,time_add) VALUES (2 ,2 ,1 ,'2021-12-20 10:00:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (3 ,1 ,3 ,'2021-12-20 10:10:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (4 ,3 ,1 ,'2021-12-20 10:10:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (5 ,2 ,3 ,'2021-12-20 10:20:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (6 ,3 ,2 ,'2021-12-20 10:20:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (7 ,2 ,4 ,'2021-12-20 10:30:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (8 ,4 ,2 ,'2021-12-20 10:30:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (9 ,3 ,5 ,'2021-12-20 10:40:00');");
-        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (10 ,5 ,3 ,'2021-12-20 10:40:00');");
+        db.execSQL("INSERT INTO t_friend (fid, user_uid ,friend_uid ,time_add) VALUES (1 ,1 ,2 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid, user_uid ,friend_uid ,time_add) VALUES (2 ,2 ,1 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (3 ,1 ,3 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (4 ,3 ,1 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (5 ,2 ,3 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (6 ,3 ,2 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (7 ,2 ,4 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (8 ,4 ,2 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (9 ,3 ,5 ,1686534883321);");
+        db.execSQL("INSERT INTO t_friend (fid ,user_uid ,friend_uid ,time_add) VALUES (10 ,5 ,3 ,1686534883321);");
 
 // 插入群组数据
-        db.execSQL("INSERT INTO t_group (gid ,name ,creator_uid ,time_create) VALUES (1 ,'2023讨论群' ,1 ,'2021-12-20 11:00:00');");
-        db.execSQL("INSERT INTO t_group (gid ,name ,creator_uid ,time_create) VALUES (2 ,'503' ,2 ,'2021-12-20 11:10:00');");
+        db.execSQL("INSERT INTO t_group (gid ,name ,creator_uid ,time_create) VALUES (1 ,'2023讨论群' ,1 ,1686534883321);");
+        db.execSQL("INSERT INTO t_group (gid ,name ,creator_uid ,time_create) VALUES (2 ,'503' ,2 ,1686534883321);");
 // 插入群组成员数据
-        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (1,1,1,0,'qrcode','admin','2021-12-20 11:00:00');");
-        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (2,1,2,1,'invite','Alice','2021-12-20 11:05:00');");
-        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (3,1,3,2,'invite','Bob','2021-12-20 11:06:00');");
-        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (4,2,2,0,'qrcode','Alice','2021-12-20 11:10:00');");
-        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (5,2,4,2,'invite','Charlie','2021-12-20 11:15:00');");
+        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (1,1,1,0,'qrcode','admin',1686534883321);");
+        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (2,1,2,1,'invite','Alice',1686534883321);");
+        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (3,1,3,2,'invite','Bob',1686534883321);");
+        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (4,2,2,0,'qrcode','Alice',1686534883321);");
+        db.execSQL("INSERT INTO t_group_members (gmid,gid,user_uid,invite_uid,invite_type,user_nickname,time_join) VALUES (5,2,4,2,'invite','Charlie',1686534883321);");
 
 // 插入消息数据
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (1,'Hi Alice',1,FALSE,2,FALSE,'2021-12-20 11:30:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (2,'Hi admin',2,FALSE,1,FALSE,'2021-12-20 11:31:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (3,'Hello Bob',1,FALSE,3,FALSE,'2021-12-20 11:32:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (4,'Hello admin',3,FALSE,1,FALSE,'2021-12-20 11:33:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (5,'Hey Alice',3,FALSE,2,FALSE,'2021-12-20 11:34:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (6,'Hey Bob',2,FALSE,3,FALSE,'2021-12-20 11:35:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (7,'Hello everyone',1,TRUE,1,FALSE,'2021-12-20 11:36:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (8,'Hello admin',2,TRUE,1,FALSE,'2021-12-20 11:37:00');");
-        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (9,'Hi guys',4,FALSE,2,FALSE,'2021-12-20 11:38:00');");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (1,'Hi Alice',1,FALSE,2,FALSE,1686534881321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (2,'Hi admin',2,FALSE,1,FALSE,1686534882321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (3,'Hello Bob',1,FALSE,3,FALSE,1686534833321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (4,'Hello admin',3,FALSE,1,FALSE,1686534844321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (5,'Hey Alice',3,FALSE,2,FALSE,1686534885321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (6,'Hey Bob',2,FALSE,3,FALSE,1686534886321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (7,'Hello everyone',1,TRUE,1,FALSE,1686534887321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (8,'Hello admin',2,TRUE,1,FALSE,1686534888321);");
+        db.execSQL("INSERT INTO t_message (mid,content,sender_uid,is_group,receiver_id,is_withdraw,time_send) VALUES (9,'Hi guys',4,FALSE,2,FALSE,1686534888321);");
     }
 
 

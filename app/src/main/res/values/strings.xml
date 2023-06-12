@@ -16,6 +16,8 @@
     <string name="set_chat_to_top">置顶聊天</string>
     <string name="block_chat_msg">免打扰</string>
     <string name="clear_chat_msg">清空聊天记录</string>
+    <string name="add_contacts">添加好友</string>
+    <string name="wechat_id_or_mobile">输入微信号</string>
 
     <string name="connect_to_server_error">不能连接到服务器</string>
 </resources>

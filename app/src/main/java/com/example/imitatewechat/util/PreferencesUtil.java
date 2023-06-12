@@ -187,6 +187,7 @@ public class PreferencesUtil {
     public void setUser(User user) {
         saveParam("user", user.getUid());
     }
+
     public int getUserID() {
 //            user = JSON.parseObject((String) getParam("user", ""), User.class);
         return (int) getParam("user", 0);

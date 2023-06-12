@@ -1,6 +1,7 @@
 package com.example.imitatewechat.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.entity.Friend;
 import com.example.imitatewechat.entity.User;
 import com.example.imitatewechat.util.PreferencesUtil;
+import com.example.imitatewechat.widget.EditDialog;
+import com.example.imitatewechat.widget.NoTitleAlertDialog;
 
 /**
  * 通讯录
@@ -40,7 +43,6 @@ public class ContactsFragment extends BaseFragment {
     // 好友总数
     TextView mFriendsCountTv;
 
-    TextView mNewFriendsUnreadNumTv;
 
     // 好友列表
     List<Friend> mFriendList;
@@ -56,17 +58,38 @@ public class ContactsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         mTitleTv = view.findViewById(R.id.tv_title);
         mFriendsLv = view.findViewById(R.id.lv_friends);
-//        ButterKnife.bind(this, view);
+        view.findViewById(R.id.iv_add).setOnClickListener(view1 -> {
+            EditDialog mEditDialog = new EditDialog(getActivity(), "添加好友",
+                    "", "输入要想添加的好友id",
+                    "添加", "取消");
+            mEditDialog.setOnDialogClickListener(new EditDialog.OnDialogClickListener() {
+                @Override
+                public void onOkClick() {
+                    mEditDialog.dismiss();
+                    String user_id = mEditDialog.getContent();
+                    boolean status = mDao.addFriendByUserId(currentUser, Integer.parseInt(user_id));
+                    Log.d("add_userid",user_id+","+status);
+                    if(status){
+                        (new NoTitleAlertDialog(getActivity(),"成功添加好友","确认")).show();
+                        refreshFriendsList();
+                    }else{
+                        (new NoTitleAlertDialog(getActivity(),"添加好友失败，请确认好友id","确认")).show();
+                    }
+                }
+
+                @Override
+                public void onCancelClick() {
+                    mEditDialog.dismiss();
+                }
+            });
+            mEditDialog.show();
+        });
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        PreferencesUtil.getInstance().init(getActivity());
-//        mUserDao = new UserDao();
-//        mUser = PreferencesUtil.getInstance().getUser();
-
         mDao = new SQLiteDao(getActivity());
         currentUser = mDao.queryUserById(PreferencesUtil.getInstance().getUserID());
         currentUser.setChats(mDao.queryChatListByUser(currentUser));
@@ -84,24 +107,6 @@ public class ContactsFragment extends BaseFragment {
 
         mFriendsCountTv = footerView.findViewById(R.id.tv_total);
 
-        RelativeLayout mNewFriendsRl = headerView.findViewById(R.id.rl_new_friends);
-        mNewFriendsRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // todo 添加新好友
-//                startActivity(new Intent(getActivity(), NewFriendsActivity.class));
-//                PreferencesUtil.getInstance().setNewFriendsUnreadNumber(0);
-            }
-        });
-
-
-        mNewFriendsUnreadNumTv = headerView.findViewById(R.id.tv_new_friends_unread);
-
-        // 对list进行排序
-//        Collections.sort(mFriendList, new PinyinComparator() {
-//        });
-
-//        mStarFriendList.addAll(mFriendList);
 
         mFriendsListAdapter = new FriendsListAdapter(getActivity(), R.layout.item_contacts, mFriendList);
         mFriendsLv.setAdapter(mFriendsListAdapter);
@@ -112,24 +117,6 @@ public class ContactsFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // todo 查看好友信息
-//                if (position != 0 && position != mStarFriendList.size() + 1) {
-//                    User friend = mStarFriendList.get(position - 1);
-//                    String userType = friend.getUserType();
-//                    if (Constant.USER_TYPE_REG.equals(userType)) {
-//                        if (friend.getUserId().equals(mUser.getUserId())) {
-//                            startActivity(new Intent(getActivity(), UserInfoMyActivity.class));
-//                        } else {
-//                            startActivity(new Intent(getActivity(), UserInfoActivity.class).
-//                                    putExtra("userId", friend.getUserId()));
-//                        }
-//                    } else if (Constant.USER_TYPE_WEIXIN.equals(userType)) {
-//                        startActivity(new Intent(getActivity(), UserInfoActivity.class).
-//                                putExtra("userId", friend.getUserId()));
-//                    } else if (Constant.USER_TYPE_FILEHELPER.equals(userType)) {
-//                        startActivity(new Intent(getActivity(), UserInfoFileHelperActivity.class).
-//                                putExtra("userId", friend.getUserId()));
-//                    }
-//                }
             }
         });
     }
@@ -137,11 +124,6 @@ public class ContactsFragment extends BaseFragment {
 
     public void refreshFriendsList() {
         mFriendList = mDao.queryAllFriendsByUser(currentUser);
-
-        // 对list进行排序
-//        Collections.sort(mFriendList, new PinyinComparator() {
-//        });
-//        mStarFriendList.addAll(mFriendList);
         mFriendsListAdapter.setData(mFriendList);
         mFriendsListAdapter.notifyDataSetChanged();
         mFriendsCountTv.setText(MessageFormat.format("{0}位联系人", mFriendList.size()));

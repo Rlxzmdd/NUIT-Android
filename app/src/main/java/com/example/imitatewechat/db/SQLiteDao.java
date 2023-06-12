@@ -56,6 +56,9 @@ public class SQLiteDao {
                 cursor.close();
             }
         }
+        if(user == null){
+            throw new UserNotFoundException();
+        }
         return user;
     }
 
@@ -217,7 +220,7 @@ having m.time_send = max(m.time_send)
             // 获取SQLiteDatabase对象
             SQLiteDatabase db = SqlHelper.getReadableDatabase();
             // 定义SQL语句
-            String sql = "SELECT * FROM t_message WHERE (sender_uid = ? AND receiver_id = ? AND is_group = false) OR (sender_uid = ? AND receiver_id = ? AND is_group = false) ORDER BY time_send DESC";
+            String sql = "SELECT * FROM t_message WHERE (sender_uid = ? AND receiver_id = ? AND is_group = false) OR (sender_uid = ? AND receiver_id = ? AND is_group = false) ORDER BY time_send ASC";
             // todo 修复根据时间排序问题。目前排序有点奇怪。
             // 执行查询操作，返回Cursor对象
             cursor = db.rawQuery(sql, new String[]{String.valueOf(user.getUid()), String.valueOf(chat_id), String.valueOf(chat_id), String.valueOf(user.getUid())});
@@ -270,5 +273,30 @@ having m.time_send = max(m.time_send)
     // 一个方法来关闭数据库资源
     public void closeDatabase() {
         SqlHelper.closeDatabase();
+    }
+
+    public boolean addFriendByUserId(User currentUser,int user_id) {
+        try{
+            User addto = queryUserById(user_id);
+            SQLiteDatabase db = SqlHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("user_uid", currentUser.getUid());
+            values.put("friend_uid", addto.getUid());
+            values.put("time_add", (new Date()).toString());
+            long rowId = db.insert("t_friend", null, values);
+            if (rowId != -1) {
+                values = new ContentValues();
+                values.put("user_uid", addto.getUid());
+                values.put("friend_uid", currentUser.getUid());
+                values.put("time_add", (new Date()).toString());
+                db.insert("t_friend", null, values);
+                insertMessage(new Message(0,"我和你已经是好友了，快来聊天吧",addto.getUid(),false,currentUser.getUid(),false,new Date()));
+                return true;
+            } else {
+                return false;
+            }
+        }catch (UserNotFoundException e){
+            return false;
+        }
     }
 }

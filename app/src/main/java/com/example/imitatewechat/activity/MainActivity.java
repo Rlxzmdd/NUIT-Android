@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity {
         if (resultCode == RESULT_OK) { // 如果结果码是成功的
             Log.d("chat_code", String.valueOf(requestCode));
             // 查看从那个聊天记录返回，并更新最新Friend中的msg
+            currentUser.setChats(mDao.queryChatListByUser(currentUser));
             ArrayList<ChatFriend> fs = currentUser.getChats();
             ChatFriend f = fs.get(requestCode);
             f.setMsg(data.getStringExtra("message"));
@@ -109,7 +110,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rl_chats:
                 // 会话列表
                 // 主动加载一次会话
-               // mChatsFragment.refreshConversationList();
+                mChatsFragment.refreshConversationList();
                 mIndex = 0;
                 //StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.app_common_bg);
                 break;
@@ -117,14 +118,6 @@ public class MainActivity extends BaseActivity {
                 mIndex = 1;
                 //StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.app_common_bg);
                 break;
-//            case R.id.rl_discover:
-//                mIndex = 2;
-//                StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.app_common_bg);
-//                break;
-//            case R.id.rl_me:
-//                mIndex = 3;
-//                StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.bottom_text_color_normal);
-//                break;
         }
 
         if (mCurrentTabIndex != mIndex) {
