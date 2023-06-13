@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    >
 
     <ImageView
         android:id="@+id/message_left_avatar"
@@ -31,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:textColor="@color/black"
                 android:text="左边用户" />
             <TextView
                 android:id="@+id/message_left_time"
@@ -46,8 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="200dp"
-            android:text="00asdasd"
-            android:textColor="#000000" /> <!-- 把内容放在下面 -->
+            android:textColor="@color/black"
+            android:text="00asdasd"/> <!-- 把内容放在下面 -->
 
     </LinearLayout>
 </LinearLayout>

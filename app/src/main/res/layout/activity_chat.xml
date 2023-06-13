@@ -52,15 +52,16 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="16sp" />
-    <ImageButton
-        android:id="@+id/chat_return"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/chat_return" />
+
+        <ImageButton
+            android:id="@+id/chat_return"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/btn_top_back" />
     <!--搜素框-->
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
@@ -87,26 +88,37 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:clipChildren="false"
-        android:background="@drawable/linear_layout_bg"
+        android:background="@color/main_tab_bg"
+        android:stateListAnimator="@animator/lift_on_touch"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/editTextMessageInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signinEmailIdCardView"
             android:layout_weight="1"
-            android:stateListAnimator="@animator/lift_on_touch"
-            android:background="@drawable/edit_text_bg"
-            android:hint="点击输入信息..."
-            android:inputType="textMultiLine|textCapSentences|textAutoCorrect|textAutoComplete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/white"
             android:maxLines="4"
-            android:padding="10dp"
-            android:layout_margin="8dp"
-            android:textColor="#000000" />
+            >
+
+            <EditText
+                android:id="@+id/editTextMessageInput"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@drawable/edit_text_bg"
+                android:hint="点击输入信息..."
+                android:inputType="textMultiLine|textCapSentences|textAutoCorrect|textAutoComplete"
+                android:maxLines="4"
+                android:textColor="#000000"
+                android:layout_margin="8dp"
+                />
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/buttonSendMessage"

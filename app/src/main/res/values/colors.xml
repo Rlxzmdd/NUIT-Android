@@ -5,7 +5,7 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#1E1E1E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_white">#FFFFFF</color>
     <color name="grid_state_focused">#80000000</color>
@@ -38,6 +38,7 @@
     <color name="color_light_grey">#f0f0f0</color>
     <color name="error_item_color">#F6EBE6</color>
     <color name="setting_content">#80000000</color>
+
 </resources>
 
 
