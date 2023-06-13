@@ -1,9 +1,12 @@
 package com.example.imitatewechat.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.os.Build;
@@ -13,6 +16,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.example.imitatewechat.LoadingActivity;
+import com.example.imitatewechat.util.DataUtils;
 import com.example.imitatewechat.widget.AlertDialog;
 import com.example.imitatewechat.widget.NoTitleAlertDialog;
 
@@ -25,18 +30,16 @@ import androidx.fragment.app.FragmentActivity;
  * @author zhou
  */
 public abstract class BaseActivity extends FragmentActivity {
-
-    //private MessageDao mMessageDao;
+    private ActivityCollector ac = new ActivityCollector();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
-        //ButterKnife.bind(this);
         initData();
         initListener();
         initView();
-        //mMessageDao = new MessageDao();
+        ac.addActivity(this);
     }
 
     public abstract int getContentView();
@@ -47,59 +50,14 @@ public abstract class BaseActivity extends FragmentActivity {
 
     public abstract void initData();
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ac.removeActivity(this);
     }
 
-    /**
-     * 监听登录状态
-     *
-     * 登录状态改变事件
-     */
-//    public void onEventMainThread(LoginStateChangeEvent event) {
-//        final LoginStateChangeEvent.Reason reason = event.getReason();
-//        switch (reason) {
-//            // 被挤掉线
-//            case user_logout:
-//                // 去除登录标识
-//                PreferencesUtil.getInstance().setLogin(false);
-//
-//                final ConfirmDialog logoutConfirmDialog = new ConfirmDialog(this, "",
-//                        "您的账号在其他设备上登陆", "重新登录", "退出");
-//                logoutConfirmDialog.setOnDialogClickListener(new ConfirmDialog.OnDialogClickListener() {
-//                    @Override
-//                    public void onOkClick() {
-//                        // 重新登录
-//                        logoutConfirmDialog.dismiss();
-//                        User user = PreferencesUtil.getInstance().getUser();
-//                        JMessageClient.login(user.getUserId(), user.getUserImPassword(), new BasicCallback() {
-//                            @Override
-//                            public void gotResult(int responseCode, String responseMessage) {
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onCancelClick() {
-//                        // 退出
-//                        logoutConfirmDialog.dismiss();
-//                        // 清除本地记录
-//                        PreferencesUtil.getInstance().setUser(null);
-//                        User.deleteAll(User.class);
-//
-//                        // 跳转至登录页
-//                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                });
-//                // 点击空白处消失
-//                logoutConfirmDialog.setCancelable(false);
-//                logoutConfirmDialog.show();
-//                break;
-//        }
-//    }
+
 
     protected void initStatusBar() {
         Window win = getWindow();
@@ -179,18 +137,46 @@ public abstract class BaseActivity extends FragmentActivity {
         paint.setStrokeWidth(0.8f);
     }
 
-    /**
-     * 复制普通文本至剪切板
-     *
-     * @param plainText 普通文本
-     */
-    protected void setPlainTextClipData(String plainText) {
-        // 获取剪贴板管理器
-        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        // 创建普通字符型ClipData
-        ClipData mClipData = ClipData.newPlainText("Label", plainText);
-        // 将ClipData内容放到系统剪贴板里
-        cm.setPrimaryClip(mClipData);
+
+
+    // 强制下线动作
+    private ForceOfflineReceiver receiver; // 广播接收器
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(); // 创建一个广播过滤器
+        intentFilter.addAction("com.example.forceoffline.FORCE_OFFLINE"); // 添加强制下线的动作
+        receiver = new ForceOfflineReceiver(); // 创建一个广播接收器
+        registerReceiver(receiver, intentFilter); // 注册广播接收器
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (receiver != null) {
+            unregisterReceiver(receiver); // 注销广播接收器
+            receiver = null;
+        }
+    }
+
+    class ForceOfflineReceiver extends BroadcastReceiver { // 定义一个内部类继承自BroadcastReceiver
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            final AlertDialog mAlertDialog = new AlertDialog(context, "下线通知", "即将下线", "确认");
+            mAlertDialog.setOnDialogClickListener(new AlertDialog.OnDialogClickListener() {
+                @Override
+                public void onOkClick() {
+                    mAlertDialog.dismiss();
+                    ac.finishAll();
+                    (new DataUtils(context)).clear();
+                    Intent intent = new Intent(context, LoadingActivity.class);
+                    context.startActivity(intent); // 启动登录界面活动
+                }
+
+            });
+            // 点击空白处消失
+            mAlertDialog.show();
+        }
+    }
 }

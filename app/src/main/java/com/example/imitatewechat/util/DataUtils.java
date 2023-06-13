@@ -30,4 +30,10 @@ public class DataUtils {
             throw new UserNotFoundException();
         return dao.queryUserById(uid);
     }
+    public void clear(){
+        SharedPreferences settings = this.context.getSharedPreferences("quickLogin", MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

@@ -142,48 +142,6 @@ public class PreferencesUtil {
         return getObject(key);
     }
 
-    /**
-     * Whether to use for the first time
-     *
-     * @return
-     */
-    public boolean isFirst() {
-        return (Boolean) getParam("isFirst", true);
-    }
-
-    /**
-     * set user first use is false
-     *
-     * @return
-     */
-    public void setFirst(Boolean isFirst) {
-        saveParam("isFirst", isFirst);
-    }
-
-    /**
-     * Set up the first time login
-     *
-     * @return
-     */
-    public boolean isLogin() {
-        return (Boolean) getParam("isLogin", false);
-    }
-
-    /**
-     * @return
-     */
-    public void setLogin(Boolean isLogin) {
-        saveParam("isLogin", isLogin);
-    }
-
-    public void setNewMsgsUnreadNumber(int newMsgsUnreadNumber) {
-        saveParam("newMsgsUnreadNumber", newMsgsUnreadNumber);
-    }
-
-    public Integer getNewMsgsUnreadNumber() {
-        return (Integer) getParam("newMsgsUnreadNumber", 0);
-    }
-
     public void setUser(User user) {
         saveParam("user", user.getUid());
     }
@@ -191,14 +149,6 @@ public class PreferencesUtil {
     public int getUserID() {
 //            user = JSON.parseObject((String) getParam("user", ""), User.class);
         return (int) getParam("user", 0);
-    }
-
-    public void setNewFriendsUnreadNumber(int newFriendsUnreadNumber) {
-        saveParam("newFriendsUnreadNumber", newFriendsUnreadNumber);
-    }
-
-    public Integer getNewFriendsUnreadNumber() {
-        return (Integer) getParam("newFriendsUnreadNumber", 0);
     }
 
     public Object getObject(String key) {
@@ -217,67 +167,4 @@ public class PreferencesUtil {
         return null;
     }
 
-    public void setPickedProvince(String provinceName) {
-        saveParam("pickedProvince", provinceName);
-    }
-
-    public String getPickedProvince() {
-        return (String) getParam("pickedProvince", "");
-    }
-
-    public void setPickedCity(String cityName) {
-        saveParam("pickedCity", cityName);
-    }
-
-    public String getPickedCity() {
-        return (String) getParam("pickedCity", "");
-    }
-
-    public void setPickedDistrict(String districtName) {
-        saveParam("pickedDistrict", districtName);
-    }
-
-    public String getPickedDistrict() {
-        return (String) getParam("pickedDistrict", "");
-    }
-
-    public void setPickedPostCode(String postCode) {
-        saveParam("pickedPostCode", postCode);
-    }
-
-    public String getPickedPostCode() {
-        return (String) getParam("pickedPostCode", "");
-    }
-
-    /**
-     * 是否开启"附近的人"
-     *
-     * @return true:是  false:否
-     */
-    public boolean isOpenPeopleNearby() {
-        return (Boolean) getParam("isOpenPeopleNearby", false);
-    }
-
-    /**
-     * 设置是否开启附近的人
-     *
-     * @param isOpenPeopleNearby 是否开启附近的人
-     */
-    public void setOpenPeopleNearby(Boolean isOpenPeopleNearby) {
-        saveParam("isOpenPeopleNearby", isOpenPeopleNearby);
-    }
-
-    public <T> void setList(String key, List<T> list) {
-        saveParam(key, JSON.toJSONString(list));
-    }
-
-    public <T> List<T> getList(String key, Class<T> clazz) {
-        List<T> list;
-        try {
-            list = JSON.parseArray((String) getParam(key, ""), clazz);
-        } catch (Exception e) {
-            list = new ArrayList<>();
-        }
-        return list;
-    }
 }

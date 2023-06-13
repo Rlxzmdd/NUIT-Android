@@ -19,6 +19,7 @@ import com.example.imitatewechat.fragment.ContactsFragment;
 import com.example.imitatewechat.entity.ChatFriend;
 import com.example.imitatewechat.entity.User;
 import com.example.imitatewechat.util.PreferencesUtil;
+import com.example.imitatewechat.util.StatusBarUtil;
 
 import java.util.ArrayList;
 
@@ -43,20 +44,25 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView() {
         initStatusBar();
+
+        //实例化fragment数据
         mChatsFragment = new ChatsFragment();
         mContactsFragment = new ContactsFragment();
         mFragments = new Fragment[]{mChatsFragment, mContactsFragment};
 
+        //实例化按钮
         mMainButtonIvs = new ImageView[2];
         mMainButtonIvs[0] = findViewById(R.id.iv_chats);
         mMainButtonIvs[1] = findViewById(R.id.iv_contacts);
         mMainButtonIvs[0].setSelected(true);
 
+        //实例化按钮图片
         mMainButtonTvs = new TextView[2];
         mMainButtonTvs[0] = findViewById(R.id.tv_chats);
         mMainButtonTvs[1] = findViewById(R.id.tv_contacts);
         mMainButtonTvs[0].setTextColor(0xFF45C01A);
 
+        //启动fragment管理器
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.rl_fragment_container, mChatsFragment)
                 .add(R.id.rl_fragment_container, mContactsFragment)
@@ -78,14 +84,6 @@ public class MainActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        RecyclerView mRv = findViewById(R.id.message_list);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        mRv.setLayoutManager(linearLayoutManager);
-//
-//        adapter = new MessageListAdapter(this,currentUser);
-//        mRv.setAdapter(adapter);
     }
 
 
@@ -112,12 +110,16 @@ public class MainActivity extends BaseActivity {
                 // 主动加载一次会话
                 mChatsFragment.refreshConversationList();
                 mIndex = 0;
-                //StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.app_common_bg);
+                StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.app_common_bg);
                 break;
             case R.id.rl_contacts:
                 mIndex = 1;
-                //StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.app_common_bg);
+                StatusBarUtil.setStatusBarColor(MainActivity.this, R.color.app_common_bg);
                 break;
+            case R.id.rl_me:
+                Intent intent = new Intent("com.example.forceoffline.FORCE_OFFLINE");
+                sendBroadcast(intent);
+            break;
         }
 
         if (mCurrentTabIndex != mIndex) {

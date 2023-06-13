@@ -18,6 +18,7 @@ import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.entity.ChatFriend;
 import com.example.imitatewechat.entity.Message;
 import com.example.imitatewechat.entity.User;
+import com.example.imitatewechat.task.WeatherTask;
 import com.example.imitatewechat.util.PreferencesUtil;
 import com.example.imitatewechat.widget.EditDialog;
 import com.example.imitatewechat.widget.NoTitleAlertDialog;
@@ -82,6 +83,9 @@ public class ChatsFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setTitleStrokeWidth(mTitleTv);
+        // 更新天气情况
+        WeatherTask weather = new WeatherTask(this.getContext(),mTitleTv);
+        new Thread(weather).start();
 
         mDao = new SQLiteDao(getActivity());
         currentUser = mDao.queryUserById(PreferencesUtil.getInstance().getUserID());

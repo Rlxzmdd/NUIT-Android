@@ -2,9 +2,11 @@
     <string name="app_name">Imitate WeChat</string>
 
     <string name="tab_chats">微信</string>
+    <string name="tab_chats_weather">微信天气：{0}度</string>
     <string name="tab_contacts">通讯录</string>
     <string name="tab_discover">发现</string>
-    <string name="tab_me">我</string>
+    <string name="tab_me">下线</string>
+<!--    <string name="tab_me">我</string>-->
 
     <string name="saving">正在保存</string>
     <string name="wx_id_or_phone">微信号/手机号</string>

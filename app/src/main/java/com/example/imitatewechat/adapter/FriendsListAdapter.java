@@ -52,30 +52,13 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
         }
 
         Friend friend = getItem(position);
-        String header;
-        header = CommonUtil.setUserHeader(friend.getName());
-
-        viewHolder.mNameTv.setText(friend.getName());
 
 
         String avatar = friend.getPic();
-//        if (0 == position || null != header && !header.equals(getItem(position - 1).getUserHeader())) {
-//            if (TextUtils.isEmpty(header)) {
-//                viewHolder.mHeaderTv.setVisibility(View.GONE);
-//                viewHolder.mTempView.setVisibility(View.VISIBLE);
-//            } else {
-//                viewHolder.mHeaderTv.setVisibility(View.VISIBLE);
-//                viewHolder.mHeaderTv.setText(header);
-//                viewHolder.mTempView.setVisibility(View.GONE);
-//            }
-//        } else {
-            viewHolder.mHeaderTv.setVisibility(View.GONE);
-            viewHolder.mTempView.setVisibility(View.VISIBLE);
-//        }
 
-//        if (!TextUtils.isEmpty(avatar)) {
-//            viewHolder.mAvatarSdv.setImageURI(Uri.parse(avatar));
-//        }
+        viewHolder.mNameTv.setText(friend.getName());
+        viewHolder.mHeaderTv.setVisibility(View.GONE);
+        viewHolder.mTempView.setVisibility(View.VISIBLE);
 
         return convertView;
     }

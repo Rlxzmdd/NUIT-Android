@@ -18,6 +18,7 @@ import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.entity.ChatFriend;
 import com.example.imitatewechat.entity.Message;
 import com.example.imitatewechat.entity.User;
+import com.example.imitatewechat.util.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        StatusBarUtil.setStatusBarColor(ChatActivity.this, R.color.app_common_bg);
 
         mDao = new SQLiteDao(this);
         currentUser = getIntent().getParcelableExtra("currentUser"); // 从intent中获取当前用户信息

@@ -98,34 +98,34 @@
 <!--                android:textSize="11sp" />-->
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_discover"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onTabClicked"
-            android:padding="3dp">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_discover"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:onClick="onTabClicked"-->
+<!--            android:padding="3dp">-->
 
-            <ImageView
-                android:id="@+id/iv_discover"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_centerHorizontal="true"
-                android:focusable="false"
-                android:scaleType="centerInside"
-                android:src="@drawable/bg_tab_discover" />
+<!--            <ImageView-->
+<!--                android:id="@+id/iv_discover"-->
+<!--                android:layout_width="26dp"-->
+<!--                android:layout_height="26dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:focusable="false"-->
+<!--                android:scaleType="centerInside"-->
+<!--                android:src="@drawable/bg_tab_discover" />-->
 
-            <TextView
-                android:id="@+id/tv_discover"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/iv_discover"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="2dp"
-                android:text="@string/tab_discover"
-                android:textColor="#353535"
-                android:textSize="11sp" />
-        </RelativeLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_discover"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/iv_discover"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:text="@string/tab_discover"-->
+<!--                android:textColor="#353535"-->
+<!--                android:textSize="11sp" />-->
+<!--        </RelativeLayout>-->
 
         <RelativeLayout
             android:id="@+id/rl_me"

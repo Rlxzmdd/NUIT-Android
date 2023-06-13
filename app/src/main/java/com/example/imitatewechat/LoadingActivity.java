@@ -13,6 +13,7 @@ import com.example.imitatewechat.db.SQLiteDao;
 import com.example.imitatewechat.exception.UserNotFoundException;
 import com.example.imitatewechat.entity.User;
 import com.example.imitatewechat.util.DataUtils;
+import com.example.imitatewechat.util.StatusBarUtil;
 
 public class LoadingActivity extends AppCompatActivity {
 

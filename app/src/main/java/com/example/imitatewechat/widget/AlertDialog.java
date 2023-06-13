@@ -135,4 +135,6 @@ public class AlertDialog extends Dialog {
         void onOkClick();
     }
 
+    public class Builder {
+    }
 }
