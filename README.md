@@ -4,9 +4,9 @@ Java仿微信界面(非kotlin)
 
 ### 项目部分代码来源：
 项目1: https://github.com/Ulrich2003/End-of-period-summary---Android-schoolwork-entertainment-app-imitating-wechat  
-项目2: https://github.com/BooksCup/wechat
-基于项目1，引入部分项目2的Activity和util，再进行修改   
-后面需要拿来抄作业的同学，请充分理解代码再使用  
+项目2: https://github.com/BooksCup/wechat  
+基于项目1，引入部分项目2的Activity和util，再进行修改    
+后面需要拿来抄作业的同学，请充分理解代码再使用   
 
 ### 2023年6月14日 项目要求清单
  - 四个Activity页面主体内容及跳转 
