@@ -9,9 +9,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+@Deprecated
 
 public class MySQLHelper implements Parcelable {
-    // 定义数据库的连接参数
+    // 定义数据库的连接参数 免费的线上数据库，建议自己注册一个
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static String URL = "jdbc:mysql://mysql.sqlpub.com:3306/db_wechat?characterEncoding=utf-8&serverTimezone=UTC&useSSL=false";
     private static String USER = "db_wechat";

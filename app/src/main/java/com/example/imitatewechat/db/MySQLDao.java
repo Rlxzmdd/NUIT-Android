@@ -14,6 +14,7 @@ import com.example.imitatewechat.entity.Message;
 /**
  * Tips：Dao类封装了一系列数据库操作，比如插入条目，搜索条目等等
  */
+@Deprecated
 public class MySQLDao{
     private final MySQLHelper SqlHelper;
 

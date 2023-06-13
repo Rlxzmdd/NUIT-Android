@@ -44,7 +44,9 @@
             android:inputType="text"
             android:textColorHint="#a2a2a2"
             android:layout_marginLeft="40sp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:textColor="@color/black"
+            />
         <View
             android:layout_below="@id/account"
             android:layout_marginTop="17dp"
@@ -76,7 +78,8 @@
             android:textSize="15sp"
             android:textColorHint="#a2a2a2"
             android:layout_marginLeft="40sp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:textColor="@color/black"/>
         <View
             android:layout_below="@id/password"
             android:layout_marginTop="17dp"

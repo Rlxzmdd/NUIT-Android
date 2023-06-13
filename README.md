@@ -2,11 +2,30 @@
 广东东软学院安卓开发期末作业
 Java仿微信界面(非kotlin)
 
-### 项目fork来源：
+### 项目部分代码来源：
+项目1: https://github.com/Ulrich2003/End-of-period-summary---Android-schoolwork-entertainment-app-imitating-wechat  
+项目2: https://github.com/BooksCup/wechat
+基于项目1，引入部分项目2的Activity和util，再进行修改   
+后面需要拿来抄作业的同学，请充分理解代码再使用  
 
-https://github.com/Ulrich2003/End-of-period-summary---Android-schoolwork-entertainment-app-imitating-wechat
+### 2023年6月14日 项目要求清单
+ - 四个Activity页面主体内容及跳转 
+ - 登录页“取消”和返回键能随时随地退出程序 
+   - 实际上使用系统返回键退出程序
+ - 登录页记住密码，采用SharedPreferences存储实现记住账号密码功能
+   - 实际上使用SharedPreferences直接保存用户信息
+ - 消息列表页保存数据至Sqlite数据库 
+   - SQLiteDao以及SQLiteHelper
+ - 聊天页返回至消息列表页携带回最后一条消息内容，并更新数据库和消息列表页RecyclerView 
+   - ConversationAdapter中进入聊天详情时，intent会附带user_id作为request参数，
+   - MainActivity的onActivityResult会接收这个参数，并更新对应的list
+ - 加载页全屏，无标题栏状态栏。 
+ - 布局美观情况 
+ - 强制下线
+   - activity_main.xml 下面第三个按钮实现该功能
+ - 通过JSON获取网络数据
+   - WeatherTask获取天气信息，ChatsFragment使用该类
 
-做出大量修改，造福后来人。
 
 ### 表结构如下，sql语句在init.sql。其中包含部份生成的假数据。
 
@@ -28,7 +47,7 @@ Start -> LoadingActivity 验证本地数据，查看是否登录
    - 未登录 -> PhoneNumberLoginActivity (此处的LoginActivity已被抛弃)
      - 完成登录 -> MainActivity
      - 未注册 -> RegisterActivity
-   - 已登录 -> MainActivity
+   - 已登录 -> MainActivity ~过时的逻辑，等待修改~
      - 接收uid -> 通过 SQLiteDao 获取 ChatFriend 关系（子类包含Friend和Group）
      - 传递对应的 ChatFriend 对象给下一级
      - 选择聊天对象 -> ChatActivity
