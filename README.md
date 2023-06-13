@@ -1,6 +1,8 @@
-# NUIT-Android
-广东东软学院安卓开发期末作业
-Java仿微信界面(非kotlin)
+# NUIT-Android 
+广东东软学院安卓开发期末作业  
+Java仿微信界面(非kotlin)   
+如果帮助你成功应付了期末作业   
+请点个免费的star  
 
 ### 项目部分代码来源：
 项目1: https://github.com/Ulrich2003/End-of-period-summary---Android-schoolwork-entertainment-app-imitating-wechat  
@@ -47,8 +49,8 @@ Start -> LoadingActivity 验证本地数据，查看是否登录
    - 未登录 -> PhoneNumberLoginActivity (此处的LoginActivity已被抛弃)
      - 完成登录 -> MainActivity
      - 未注册 -> RegisterActivity
-   - 已登录 -> MainActivity ~过时的逻辑，等待修改~
-     - 接收uid -> 通过 SQLiteDao 获取 ChatFriend 关系（子类包含Friend和Group）
+   - 已登录 -> MainActivity * 过时的逻辑，等待修改 *
+     - ~接收uid -> 通过 SQLiteDao 获取 ChatFriend 关系（子类包含Friend和Group）~
      - 传递对应的 ChatFriend 对象给下一级
      - 选择聊天对象 -> ChatActivity
        - 接收 ChatFriend
